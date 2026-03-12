@@ -8,7 +8,7 @@ months = range(1, 13)
 
 for year in years:
     for month in months:
-        target_file = f"lithuania_precip_{year}_{month:02d}.grib"
+        target_file = os.path.join("DataGRIB", f"lithuania_precip_{year}_{month:02d}.grib")
         
         if os.path.exists(target_file):
             continue

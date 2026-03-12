@@ -6,11 +6,10 @@ server = ECMWFDataServer()
 years = range(2006, 2024)
 
 for year in years:
-    target_file = f"lithuania_precip_{year}.grib"
+    target_file = os.path.join("DataGRIB", f"lithuania_precip_{year}.grib")
     
     if os.path.exists(target_file):
         continue
-
 
     start_date = f"{year}-01-01"
     end_date = f"{year}-12-31"
