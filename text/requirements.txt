@@ -1,0 +1,11 @@
+xarray
+matplotlib
+ecmwf-api-client
+cfgrib
+cartopy
+numpy
+pandas
+eccodes-python
+ecmwflibs
+pygrib
+dask
