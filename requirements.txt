@@ -8,3 +8,4 @@ pandas
 eccodes-python
 ecmwflibs
 pygrib
+dask
