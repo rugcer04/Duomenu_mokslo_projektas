@@ -3,14 +3,14 @@ from ecmwfapi import ECMWFDataServer
 
 server = ECMWFDataServer()
 
-YEAR = 2016
-MONTH = 12
+YEAR = 2010
+MONTH = 4
 
 GRID = "0.125/0.125"
-ORIGIN = "kwbc"
+ORIGIN = "ecmf"
 
-# FOLDER = "DataGRIB"
-FOLDER = "DataGRIB_kwbc"
+FOLDER = "DataGRIB"
+# FOLDER = "DataGRIB_kwbc"
 
 target_file = os.path.join(FOLDER, f"lithuania_precip_{YEAR}_{MONTH:02d}.grib")
 start_date = f"{YEAR}-{MONTH:02d}-01"
