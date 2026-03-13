@@ -1,5 +1,5 @@
-2016-12
-
+2016-12: AccessError: Requested data is on one or more damaged tape: J0018900.
+2017-01: AccessError: Requested data is on one or more damaged tape: J0018900.
 2017-02: AccessError: Requested data is on one or more damaged tape: J0018900.
 2017-03: AccessError: Requested data is on one or more damaged tape: J0018900.
 2017-04: AccessError: Requested data is on one or more damaged tape: J0018900.
