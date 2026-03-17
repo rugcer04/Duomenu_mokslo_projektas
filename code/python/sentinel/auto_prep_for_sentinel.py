@@ -18,16 +18,19 @@ def prepare_dataset(file_path):
     
     try:
         with xr.open_dataset(full_path) as ds:
-            ds = ds.sortby(['lat', 'lon'])
             
+            print(f"[{file_path}]: boxing.")
             ds_box = ds.sel(
                 lon=slice(vilnius_lon - 0.25, vilnius_lon + 0.25),
                 lat=slice(vilnius_lat - 0.25, vilnius_lat + 0.25))
 
-            ds_box = ds_box.groupby('time').mean()
+            # print(f"[{file_path}]: grouping.")
+            #ds_box = ds_box.groupby('time').mean()
             ds_regional = ds_box.mean(dim=['lat', 'lon'])
             
-            df_new = ds_regional.resample(time='1D').mean().to_dataframe().reset_index()
+            print(f"[{file_path}]: to df.")
+            df = ds_regional.to_dataframe()
+            df_new = df.groupby(df.index.floor('D')).mean().reset_index()
             
             print(f"Finished: {file_path}")
             return df_new
@@ -41,7 +44,7 @@ if __name__ == '__main__':
     
     print(f"Starting parallel processing of {len(nc_files)} files.")
     
-    with ProcessPoolExecutor() as executor:
+    with ProcessPoolExecutor(max_workers=4) as executor:
         results = list(executor.map(prepare_dataset, nc_files))
 
     df_list = [df for df in results if df is not None]
