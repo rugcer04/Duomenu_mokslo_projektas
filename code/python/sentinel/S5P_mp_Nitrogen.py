@@ -28,7 +28,7 @@ PRODUCT_BANDS = [
     'NO2_slant_column_number_density',
     'tropopause_pressure'
 ]
-PRODUCT_SHORT = 'formaldehyde'
+PRODUCT_SHORT = 'nitrogen'
 
 def check_valid(image, lithuania_geometry):
     count = image.select(PRODUCT_BANDS[0]).reduceRegion(
