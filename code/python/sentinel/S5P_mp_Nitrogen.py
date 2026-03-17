@@ -12,23 +12,23 @@ warnings.filterwarnings('ignore', message=".*cfgrib.*")
 warnings.filterwarnings('ignore', message=".*eccodes.*")
 warnings.filterwarnings('ignore', message=".*_eccodes.*")
 
-FOLDER     = r'.\sentinel_data\S5P_Cloud' # Paskutinę dalį pakeiskit pagal produktą
+# Estimated laikas (KK pc ir wifi): iki 1h 30 min.
+FOLDER     = r'.\sentinel_data\S5P_Nitrogen' # Paskutinę dalį pakeiskit pagal produktą
 N_WORKERS  = max(1, os.cpu_count() - 2)
 
 # Taip pat čia reikia atžvelgti į vius šiuos 6 parametrus
-DATE_START = '2018-07-04'
-DATE_END   = '2026-03-13'
-PRODUCT    = "COPERNICUS/S5P/OFFL/L3_CLOUD"
+DATE_START = '2018-06-28'
+DATE_END   = '2026-03-07'
+PRODUCT    = "COPERNICUS/S5P/OFFL/L3_NO2"
 PROJECT_ID = 'data-science-project-490323'
 PRODUCT_BANDS = [
-    'cloud_fraction', 
-    'cloud_top_pressure', 
-    'cloud_top_height', 
-    'cloud_base_pressure', 
-    'cloud_base_height', 
-    'cloud_optical_depth'
+    'NO2_column_number_density', 
+    'tropospheric_NO2_column_number_density',
+    'stratospheric_NO2_column_number_density',
+    'NO2_slant_column_number_density',
+    'tropopause_pressure'
 ]
-PRODUCT_SHORT = 'cloud'
+PRODUCT_SHORT = 'formaldehyde'
 
 def check_valid(image, lithuania_geometry):
     count = image.select(PRODUCT_BANDS[0]).reduceRegion(
