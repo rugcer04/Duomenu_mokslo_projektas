@@ -1,54 +1,83 @@
 import ee
 import geemap
+import xarray as xr
+import dask
 import os
+import warnings
+import numpy as np
+from tqdm.dask import TqdmCallback
 
-FOLDER_NAME = "S5P_Aerosol_Index"
+warnings.filterwarnings('ignore', message=".*cfgrib.*")
+warnings.filterwarnings('ignore', message=".*eccodes.*")
+warnings.filterwarnings('ignore', message=".*_eccodes.*")
 
-# ee.Authenticate()  # Run this once to authenticate with Google Earth Engine
+FOLDER  = r'.\sentinel_data\S5P_Aerosol_Index'
+CHUNK_SIZE = 500
+
 ee.Initialize(project='data-science-project-490323')
-# ee.Initialize(project='PROJECT_ID')
+
+os.makedirs(FOLDER, exist_ok=True)
 
 lithuania = ee.FeatureCollection("FAO/GAUL/2015/level0") \
     .filter(ee.Filter.eq('ADM0_NAME', 'Lithuania'))
 lithuania_geometry = lithuania.geometry()
 
-collection  = ee.ImageCollection("COPERNICUS/S5P/OFFL/L3_AER_AI") \
+bounds = lithuania_geometry.bounds().getInfo()['coordinates'][0]
+lon_min, lat_min = bounds[0]
+lon_max, lat_max = bounds[2]
+print(f"Lithuania bounds: lon [{lon_min:.2f}, {lon_max:.2f}], lat [{lat_min:.2f}, {lat_max:.2f}]")
+
+collection = ee.ImageCollection("COPERNICUS/S5P/OFFL/L3_AER_AI") \
     .filterDate('2018-07-04', '2026-03-13') \
     .filterBounds(lithuania_geometry) \
     .select('absorbing_aerosol_index')
 
-first_image = collection.sort('system:time_start', True).first()
-timestamp = first_image.date().format('YYYY-MM-dd').getInfo()
-print(f"Visualising first timestamp: {timestamp}")
-print(f"Total images in collection: {collection.size().getInfo()}")
+n_images = collection.size().getInfo()
+print(f"Total images: {n_images}")
 
-output_dir = f'./sentinel_data/{FOLDER_NAME}'
-os.makedirs(output_dir, exist_ok=True)
+ds = xr.open_dataset(
+    collection,
+    engine='ee',
+    crs='EPSG:4326',
+    scale=0.01,
+    geometry=lithuania_geometry,
+    chunks={'time': CHUNK_SIZE},
+    fast_time_slicing=True
+)
 
-image_list = collection.sort('system:time_start').toList(collection.size())
-n_images = image_list.size().getInfo()
+print(ds.chunks)
+print(ds['absorbing_aerosol_index'].encoding)
 
-print(f"Exporting {n_images} images...")
+n_lon = ds.sizes['lon']
+n_lat = ds.sizes['lat']
 
-for i in range(n_images):
-    img = ee.Image(image_list.get(i))
+print(f"Dataset size: {ds.nbytes / 1e9:.1f} GB")
+print(f"Chunks: time={CHUNK_SIZE}, lon={n_lon}, lat={n_lat}")
+print(ds)
 
-    date_str = img.date().format('YYYY-MM-dd_HH-mm-ss').getInfo()
-    img_id = str(i).zfill(5)
-    filename = f'aerosol_{img_id}_{date_str}.tif'
-    output_path = os.path.join(output_dir, filename)
+date_start = str(ds.time.min().values)[:10]
+date_end   = str(ds.time.max().values)[:10]
+output_path = os.path.join(FOLDER, f'lithuania_aerosol_{date_start}_{date_end}.nc')
 
-    if os.path.exists(output_path):
-        print(f"[{i+1}/{n_images}] Skipping: {filename}")
-        continue
+time_chunk = ds.chunks['time'][0]
+lon_chunk  = ds.chunks['lon'][0]
+lat_chunk  = ds.chunks['lat'][0]
 
-    print(f"[{i+1}/{n_images}] Exporting: {filename}")
-    geemap.ee_export_image(
-        img.clip(lithuania_geometry),
-        filename=output_path,
-        scale=1113,
-        region=lithuania_geometry,
-        file_per_band=False
+print(f"Internal chunks — time: {time_chunk}, lon: {lon_chunk}, lat: {lat_chunk}")
+
+
+with TqdmCallback(desc='Downloading'), dask.config.set(scheduler='synchronous'):
+    ds.to_netcdf(
+        output_path,
+        format='NETCDF4',
+        encoding={
+            'absorbing_aerosol_index': {
+                'zlib': True,
+                'complevel': 5,
+                'chunksizes': (time_chunk, lon_chunk, lat_chunk)
+            }
+        },
+        compute=True
     )
 
-print(f"Done! All files saved to: {output_dir}")
+print(f"Saved {output_path}")
