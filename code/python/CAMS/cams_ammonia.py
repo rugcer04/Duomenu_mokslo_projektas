@@ -4,10 +4,10 @@ from concurrent.futures import ThreadPoolExecutor
 from ecmwf.datastores import Client
 
 logging.basicConfig(level="INFO", format='%(asctime)s - %(levelname)s - %(message)s')
-DOWNLOAD_DIR = os.path.join("CAMS_Downloads", "non_methane_vocs")
+DOWNLOAD_DIR = os.path.join("CAMS_Downloads", "ammonia")
 DATASET = "cams-europe-air-quality-reanalyses"
 VILNIUS_AREA = [54.95, 25.00, 54.40, 25.55]
-MAX_WORKERS = 8
+MAX_WORKERS = 7
 
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 client = Client()
@@ -16,7 +16,7 @@ client.check_authentication()
 def download_task(task_info):
     """Function to handle a single request and download."""
     year, month = task_info
-    file_name = f"cams_{year}_{month}_non_methane_vocs_interim.zip"
+    file_name = f"cams_{year}_{month}_ammonia_interim.zip"
     target_path = os.path.join(DOWNLOAD_DIR, file_name)
 
     if os.path.exists(target_path):
@@ -24,7 +24,7 @@ def download_task(task_info):
         return
 
     request = {
-        "variable": ["non_methane_vocs"],
+        "variable": ["ammonia"],
         "model": ["ensemble"],
         "level": ["500"],
         "type": ["interim_reanalysis"],
@@ -42,7 +42,7 @@ def download_task(task_info):
         logging.error(f"Failed to download {file_name}: {e}")
 
 if __name__ == "__main__":
-    years = ["2024", "2025"]
+    years = ["204", "2025"]
     months = [f"{m:02d}" for m in range(1, 13)]
     
     all_tasks = [(y, m) for y in years for m in months]

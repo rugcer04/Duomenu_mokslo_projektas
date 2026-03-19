@@ -5,8 +5,8 @@ import numpy as np
 import os
 from concurrent.futures import ProcessPoolExecutor
 
-CSV_OUTPUT = r'cams_data\lithuania_peroxyacyl_nitrates_vilnius.csv'
-FOLDER_TO_PROCESS = "peroxyacyl_nitrates"
+FOLDER_TO_PROCESS = "particulate_matter_10um"
+CSV_OUTPUT = f'cams_data\\lithuania_{FOLDER_TO_PROCESS}_vilnius.csv'
 
 base_path = Path(os.getcwd())
 FOLDER = os.path.join(base_path, 'CAMS unzip', FOLDER_TO_PROCESS)
@@ -19,7 +19,7 @@ def prepare_dataset(file_path):
         with xr.open_dataset(full_path) as ds:
             
             print(f"[{file_path}]: Aggregating.")
-            ds_regional = ds.mean(dim=['lat', 'lon'])
+            ds_regional = ds.mean(dim=['lat', 'lon', ])
 
             print(f"[{file_path}]: to df.")
             df = ds_regional.to_dataframe()
