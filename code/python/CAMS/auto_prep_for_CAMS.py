@@ -5,8 +5,8 @@ import numpy as np
 import os
 from concurrent.futures import ProcessPoolExecutor
 
-CSV_OUTPUT = r'cams_data\lithuania_dust_vilnius.csv'
-FOLDER_TO_PROCESS = "dust"
+CSV_OUTPUT = r'cams_data\lithuania_secondary_inorganic_aerosol_vilnius.csv'
+FOLDER_TO_PROCESS = "secondary_inorganic_aerosol"
 
 base_path = Path(os.getcwd())
 FOLDER = os.path.join(base_path, 'CAMS unzip', FOLDER_TO_PROCESS)
