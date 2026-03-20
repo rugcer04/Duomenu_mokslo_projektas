@@ -12,6 +12,8 @@ base_path = Path(os.getcwd())
 FOLDER = os.path.join(base_path, 'CAMS unzip', FOLDER_TO_PROCESS)
 nc_files = [f for f in os.listdir(FOLDER) if f.endswith('.nc')]
 
+SHIFT = 2
+
 def prepare_dataset(file_path):
     full_path = os.path.join(FOLDER, file_path)
     
@@ -23,6 +25,9 @@ def prepare_dataset(file_path):
 
             print(f"[{file_path}]: to df.")
             df = ds_regional.to_dataframe()
+
+            df.index = df.index + pd.Timedelta(hours=SHIFT)
+
             df_new = df.groupby(df.index.floor('D')).mean().reset_index()
             
             print(f"Finished: {file_path}")
