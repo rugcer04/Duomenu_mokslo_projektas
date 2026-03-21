@@ -5,14 +5,29 @@ import numpy as np
 import os
 from concurrent.futures import ProcessPoolExecutor
 
-CSV_OUTPUT = r'sentinel_data\lithuania_methane_vilnius.csv'
-FOLDER_TO_PROCESS = "S5P_Methane"
+#PARMAS=============================
+# 'aer': "Aerosol_Index"
+# 'clo': "Cloud"
+# 'nit': "Nitrogen"
+# 'oze': "Ozone"
+# 'car': "Carbon"
 
+# TODO: #1 
+ID = "oze"
+LT_TIME = True
+#===================================
+
+ALL_PRODUCTS = {'aer': "Aerosol_Index",
+                'clo': "Cloud",
+                'nit': "Nitrogen",
+                'oze': "Ozone",
+                'car': "Carbon"}
+PRODUCT_NAME = ALL_PRODUCTS[ID]
+CSV_OUTPUT = f'sentinel_data\\lithuania_{PRODUCT_NAME.lower()}_vilnius.csv'
+FOLDER_TO_PROCESS = f"S5P_{PRODUCT_NAME}"
 base_path = Path(os.getcwd())
 FOLDER = os.path.join(base_path, 'sentinel_data', FOLDER_TO_PROCESS)
 nc_files = [f for f in os.listdir(FOLDER) if f.endswith('.nc')]
-
-LT_TIME = True
 
 def prepare_dataset(file_path):
     vilnius_lon, vilnius_lat = 25.2797, 54.6872

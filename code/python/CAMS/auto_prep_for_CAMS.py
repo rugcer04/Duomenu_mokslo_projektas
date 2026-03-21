@@ -6,7 +6,7 @@ import os
 from concurrent.futures import ProcessPoolExecutor
 import pytz
 
-FOLDER_TO_PROCESS = "particulate_matter_10um"
+FOLDER_TO_PROCESS = "secondary_inorganic_aerosol"
 CSV_OUTPUT = f'cams_data\\lithuania_{FOLDER_TO_PROCESS}_vilnius.csv'
 
 base_path = Path(os.getcwd())
