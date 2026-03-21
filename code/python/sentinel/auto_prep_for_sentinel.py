@@ -12,7 +12,6 @@ from concurrent.futures import ProcessPoolExecutor
 # 'oze': "Ozone"
 # 'car': "Carbon"
 
-# TODO: #1 
 ID = "oze"
 LT_TIME = True
 #===================================
