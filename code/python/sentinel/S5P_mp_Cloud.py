@@ -58,7 +58,7 @@ def download_period(args):
     warnings.filterwarnings('ignore', message=".*eccodes.*")
     warnings.filterwarnings('ignore', message=".*_eccodes.*")
     warnings.filterwarnings('ignore', message=".*separate the stored chunks.*")
-
+    
     ee.Initialize(project=PROJECT_ID)
 
     lithuania = ee.FeatureCollection("FAO/GAUL/2015/level0") \
@@ -69,7 +69,7 @@ def download_period(args):
         .filterDate(date_start, date_end) \
         .filterBounds(lithuania_geometry) \
         .map(lambda image: check_valid(image, lithuania_geometry)) \
-            .filter(ee.Filter.gt('valid_pixel_count', 0)) \
+        .filter(ee.Filter.gt('valid_pixel_count', 0)) \
         .select(PRODUCT_BANDS)
 
     n = collection.size().getInfo()

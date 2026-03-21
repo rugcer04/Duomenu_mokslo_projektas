@@ -3,7 +3,7 @@ from ecmwfapi import ECMWFDataServer
 
 server = ECMWFDataServer()
 
-years = range(2006, 2024)
+years = range(2017, 2027)
 months = range(1, 13)
 
 for year in years:
@@ -15,13 +15,11 @@ for year in years:
         
         if year == 2006 and month < 11: continue
         if year == 2016 and month == 12: continue
-        if year == 2017 and month in range(1, 8): continue
-        if year == 2017 and month == 10: continue
+        if year == 2017 and month in range(1, 11): continue
+        if year == 2026 and month > 2: continue
 
         start_date = f"{year}-{month:02d}-01"
         end_date = f"{year}-{month:02d}-31"
-
-        if year == 2023 and month == 11: end_date = "2023-11-10"
         
         server.retrieve({
             "class": "ti",
@@ -33,7 +31,7 @@ for year in years:
             "levtype": "sfc",
             "origin": "ecmf",
             "param": "228228/167",
-            "step": "6/12/18/24",
+            "step": "24/30/36/42/48",
             "time": "00:00:00",
             "type": "cf",
             "target": target_file
