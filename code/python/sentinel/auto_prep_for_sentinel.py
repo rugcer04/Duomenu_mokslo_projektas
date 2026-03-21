@@ -12,7 +12,7 @@ base_path = Path(os.getcwd())
 FOLDER = os.path.join(base_path, 'sentinel_data', FOLDER_TO_PROCESS)
 nc_files = [f for f in os.listdir(FOLDER) if f.endswith('.nc')]
 
-SHIFT = 2
+LT_TIME = True
 
 def prepare_dataset(file_path):
     vilnius_lon, vilnius_lat = 25.2797, 54.6872
@@ -33,7 +33,10 @@ def prepare_dataset(file_path):
             print(f"[{file_path}]: to df.")
             df = ds_regional.to_dataframe()
             
-            df.index = df.index + pd.Timedelta(hours=SHIFT)
+            if LT_TIME:
+                if df.index.tz is None:
+                    df.index = df.index.tz_localize('UTC')
+                df.index = df.index.tz_convert('Europe/Vilnius')
 
             df_new = df.groupby(df.index.floor('D')).mean().reset_index()
             

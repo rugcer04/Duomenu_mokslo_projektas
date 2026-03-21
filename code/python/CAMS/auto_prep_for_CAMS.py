@@ -4,6 +4,7 @@ import xarray as xr
 import numpy as np
 import os
 from concurrent.futures import ProcessPoolExecutor
+import pytz
 
 FOLDER_TO_PROCESS = "particulate_matter_10um"
 CSV_OUTPUT = f'cams_data\\lithuania_{FOLDER_TO_PROCESS}_vilnius.csv'
@@ -12,7 +13,7 @@ base_path = Path(os.getcwd())
 FOLDER = os.path.join(base_path, 'CAMS unzip', FOLDER_TO_PROCESS)
 nc_files = [f for f in os.listdir(FOLDER) if f.endswith('.nc')]
 
-SHIFT = 2
+LT_TIME = True
 
 def prepare_dataset(file_path):
     full_path = os.path.join(FOLDER, file_path)
@@ -26,7 +27,10 @@ def prepare_dataset(file_path):
             print(f"[{file_path}]: to df.")
             df = ds_regional.to_dataframe()
 
-            df.index = df.index + pd.Timedelta(hours=SHIFT)
+            if LT_TIME:
+                if df.index.tz is None:
+                    df.index = df.index.tz_localize('UTC')
+                df.index = df.index.tz_convert('Europe/Vilnius')
 
             df_new = df.groupby(df.index.floor('D')).mean().reset_index()
             
