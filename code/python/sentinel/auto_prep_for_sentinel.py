@@ -5,7 +5,7 @@ import numpy as np
 import os
 from concurrent.futures import ProcessPoolExecutor
 
-#PARMAS=============================
+#PARAMS=============================
 # 'aer': "Aerosol_Index"
 # 'clo': "Cloud"
 # 'nit': "Nitrogen"
@@ -15,7 +15,7 @@ from concurrent.futures import ProcessPoolExecutor
 # 'sul': "Sulfur"
 # 'met': "Methane"
 
-ID = "clo"
+ID = "met"
 LT_TIME = True
 
 # "Vilnius"
