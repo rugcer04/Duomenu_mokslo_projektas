@@ -15,12 +15,13 @@ from concurrent.futures import ProcessPoolExecutor
 # 'sul': "Sulfur"
 # 'met': "Methane"
 
-ID = "nit"
+ID = "clo"
 LT_TIME = True
 
 # "Vilnius"
 # "Klaipeda"
-CITY = 'Klaipeda'
+# "Ryga"
+CITY = 'Ryga'
 #===================================
 
 ALL_PRODUCTS = {'aer': "Aerosol_Index",
@@ -33,12 +34,21 @@ ALL_PRODUCTS = {'aer': "Aerosol_Index",
                 'met': "Methane"}
 lon_lat_bank = {
         "Vilnius": {"lon": 25.2797, "lat": 54.6872, "file_end": 'vilnius'},
-        "Klaipeda": {"lon": 21.1333, "lat": 55.7167, "file_end": 'klaipeda'}
+        "Klaipeda": {"lon": 21.1333, "lat": 55.7167, "file_end": 'klaipeda'},
+        "Ryga": {"lon": 24.1052, "lat": 56.9496, "file_end": 'ryga'}
     }
 COORD = lon_lat_bank[CITY]
 PRODUCT_NAME = ALL_PRODUCTS[ID]
 CSV_OUTPUT = f'sentinel_data\\lithuania_{PRODUCT_NAME.lower()}_{COORD["file_end"]}.csv'
-FOLDER_TO_PROCESS = f"S5P_{PRODUCT_NAME}"
+
+if CITY == 'Ryga':
+    FOLDER_TO_PROCESS = f"S5P_{PRODUCT_NAME}_Ryga"
+else:
+    FOLDER_TO_PROCESS = f"S5P_{PRODUCT_NAME}"
+
+if CITY == 'Ryga' and ID == 'aer':
+    FOLDER_TO_PROCESS = f"S5P_Aerosol_Ryga"
+
 base_path = Path(os.getcwd())
 FOLDER = os.path.join(base_path, 'sentinel_data', FOLDER_TO_PROCESS)
 nc_files = [f for f in os.listdir(FOLDER) if f.endswith('.nc')]
