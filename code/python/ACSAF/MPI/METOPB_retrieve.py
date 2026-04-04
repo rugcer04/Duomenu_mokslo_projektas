@@ -63,42 +63,41 @@ def process_day(address: str, rank: int, base_dir: str) -> pd.DataFrame:
             full_file_path = os.path.join(folder_path, filename)
             
             try:
-                ds = xr.open_dataset(
-                    full_file_path, 
-                    group='TOTAL_COLUMNS', 
-                    engine='h5netcdf', 
-                    phony_dims='sort')
-                geo = xr.open_dataset(
-                    full_file_path, 
-                    group='GEOLOCATION', 
-                    engine='h5netcdf', 
-                    phony_dims='sort')
+                ds = xr.open_dataset(full_file_path, group='TOTAL_COLUMNS', engine='h5netcdf', phony_dims='sort')
+                geo = xr.open_dataset(full_file_path, group='GEOLOCATION', engine='h5netcdf', phony_dims='sort')
 
-                date_match = re.search(r'(\d{8})', filename)
-                file_date = date_match.group(1) if date_match else "Unknown"
+                main_dim = list(ds.dims)[0]
 
                 ds = ds.assign_coords({
-                    "lat": ("phony_dim_0", geo['LatitudeCentre'].values),
-                    "lon": ("phony_dim_0", geo['LongitudeCentre'].values)
+                    "lat": (main_dim, geo['LatitudeCentre'].values),
+                    "lon": (main_dim, geo['LongitudeCentre'].values)
                 })
-                geo.close()
 
-                if 'phony_dim_1' in ds.dims:
-                    ds = ds.isel(phony_dim_1=0)
+                mask = (ds.lat >= 51.4) & (ds.lat <= 59.4) & (ds.lon >= 9.4) & (ds.lon <= 32)
+                found_pixels = int(mask.sum())
+                if found_pixels == 0:
+                    ds.close()
+                    geo.close()
+                    continue
 
-                mask = (
-                    (ds.lat >= 34) & (ds.lat <= 72) & 
-                    (ds.lon >= -15) & (ds.lon <= 40)
-                )
-                
                 ds_europe = ds.where(mask, drop=True)
 
-                if ds_europe.phony_dim_0.size > 0:
-                    temp_df = ds_europe.to_dataframe().reset_index()
+                if ds_europe.sizes[main_dim] > 0:
+                    temp_df = ds_europe.to_dataframe()
+                    
+                    temp_df = temp_df.reset_index()
+                    
+                    cols_to_keep = [c for c in temp_df.columns if not c.startswith('phony_dim')]
+                    temp_df = temp_df[cols_to_keep]
+
+                    date_match = re.search(r'(\d{8})', filename)
+                    file_date = date_match.group(1) if date_match else "Unknown"
                     temp_df['date'] = pd.to_datetime(file_date, format='%Y%m%d', errors='coerce')
+                    
                     all_dataframes.append(temp_df)
                 
                 ds.close()
+                geo.close()
                 ds_europe.close()
 
             except Exception as e:
@@ -107,12 +106,7 @@ def process_day(address: str, rank: int, base_dir: str) -> pd.DataFrame:
     if not all_dataframes:
         return pd.DataFrame()
         
-    final_df = pd.concat(all_dataframes, ignore_index=True)
-    
-    if 'phony_dim_0' in final_df.columns:
-        final_df = final_df.drop(columns=['phony_dim_0'])
-        
-    return final_df
+    return pd.concat(all_dataframes, ignore_index=True)
 
 
 if __name__ == "__main__":
@@ -134,7 +128,7 @@ if __name__ == "__main__":
     parser.add_argument("--user", type=str, help="AC SAF DLR naudotojo vardas")
     parser.add_argument("--key", type=str, help="AC SAF DLR slaptažodis")
 
-    num_A_workers = int(round((size - 1) * 0.5, 0))
+    num_A_workers = int(round((size - 1) * 0.8, 0))
     num_B_workers = (size - 1) - num_A_workers
 
     a_worker_ranks = list(range(1, num_A_workers + 1))
