@@ -61,7 +61,7 @@ if __name__ == "__main__":
     parser.add_argument("--user", type=str, help="AC SAF DLR naudotojo vardas")
     parser.add_argument("--key", type=str, help="AC SAF DLR slaptažodis")
 
-    num_A_workers = int(round((size - 1) * 0.4, 0))
+    num_A_workers = int(round((size - 1) * 0.5, 0))
     num_B_workers = (size - 1) - num_A_workers
 
     a_worker_ranks = list(range(1, num_A_workers + 1))
@@ -110,24 +110,40 @@ if __name__ == "__main__":
 
     if rank == 0:
         finished_count = 0
+        processed_count = 0
         total_to_receive = len(all_links)
+        processing_pool = []
         
-        print(f"{now()} [0]: Listening for finished addresses...", flush=True)
+        print(f"{now()} [0]: Orchestrator active. Pool is live.", flush=True)
 
         while finished_count < total_to_receive:
-            status = MPI.Status()
             if comm.Iprobe(source=MPI.ANY_SOURCE, tag=99):
-                msg = comm.recv(source=MPI.ANY_SOURCE, tag=99)
-                print(f"{now()} [0]: Confirmation received for {msg}", flush=True)
+                new_address = comm.recv(source=MPI.ANY_SOURCE, tag=99)
+                processing_pool.append(new_address)
                 finished_count += 1
-            
-            time.sleep(0.1)
-    
+                print(f"{now()} [0]: Added to pool. Pool size: {len(processing_pool)}", flush=True)
+
+            if comm.Iprobe(source=MPI.ANY_SOURCE, tag=77):
+                worker_rank = comm.recv(source=MPI.ANY_SOURCE, tag=77)
+                
+                if processing_pool:
+                    task = processing_pool.pop(0)
+                    comm.send(task, dest=worker_rank, tag=88)
+                else:
+                    comm.send(None, dest=worker_rank, tag=88)
+
+            if comm.Iprobe(source=MPI.ANY_SOURCE, tag=100):
+                done_task = comm.recv(source=MPI.ANY_SOURCE, tag=100)
+                processed_count += 1
+                print(f"{now()} [0]: Processed total: {processed_count}/{total_to_receive}", flush=True)
+
+            time.sleep(0.01)
+
     elif rank in a_worker_ranks:
         try:
             ftp = FTP(creds['host'])
             ftp.login(user=creds['user'], passwd=creds['pass'])
-            print(f"{now()} [{rank}]: FTP Connected.")
+            print(f"{now()} [{rank}]: FTP Connected.", flush=True)
             
             for link in my_jobs:
                 get_day(link, ftp, rank)
@@ -135,4 +151,28 @@ if __name__ == "__main__":
                 
             ftp.quit()
         except Exception as e:
-            print(f"{now()} [{rank}]: FTP Error: {e}")
+            print(f"{now()} [{rank}]: FTP Error: {e}", flush=True)
+
+    elif rank in b_worker_ranks:
+        print(f"{now()} [{rank}]: B-Worker active.", flush=True)
+        while True:
+            comm.send(rank, dest=0, tag=77)
+            
+            task = comm.recv(source=0, tag=88)
+            
+            if task is not None:
+
+                # xarray / h5py logic to be implemented here
+                # <...>
+
+                print(f"{now()} [{rank}]: Processing {task}...", flush=True)
+                
+                # Temp: Simulate processing time
+                time.sleep(2) 
+                
+                # Delete files after processing
+                # shutil.rmtree(os.path.join(base_dir, task.lstrip('/')))
+                
+                comm.send(task, dest=0, tag=100)
+            else:
+                time.sleep(5)
