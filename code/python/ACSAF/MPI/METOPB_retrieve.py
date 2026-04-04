@@ -5,9 +5,12 @@ import numpy as np
 from mpi4py import MPI
 import time
 import h5py
-import xarray
+import xarray as xr
 import calendar
 import sys
+import pandas as pd
+import re
+import shutil
 
 
 def now() -> str:
@@ -42,6 +45,73 @@ def get_day(address: str, ftp: FTP, rank: int):
 
     print(f"{now()} [{rank}]: Finished: {address}.", flush=True)
     ftp.cwd(root_dir)
+
+
+def process_day(address: str, rank: int, base_dir: str) -> pd.DataFrame:
+    relative_address = address.lstrip('/')
+    folder_path = os.path.join(base_dir, relative_address)
+    
+    all_dataframes = []
+
+    if not os.path.exists(folder_path):
+        return pd.DataFrame()
+
+    for filename in os.listdir(folder_path):
+        if filename.upper().endswith(".HDF5"):
+            full_file_path = os.path.join(folder_path, filename)
+            
+            try:
+                ds = xr.open_dataset(
+                    full_file_path, 
+                    group='TOTAL_COLUMNS', 
+                    engine='h5netcdf', 
+                    phony_dims='sort')
+                geo = xr.open_dataset(
+                    full_file_path, 
+                    group='GEOLOCATION', 
+                    engine='h5netcdf', 
+                    phony_dims='sort')
+
+                date_match = re.search(r'(\d{8})', filename)
+                file_date = date_match.group(1) if date_match else "Unknown"
+
+                ds = ds.assign_coords({
+                    "lat": ("phony_dim_0", geo['LatitudeCentre'].values),
+                    "lon": ("phony_dim_0", geo['LongitudeCentre'].values)
+                })
+                geo.close()
+
+                if 'phony_dim_1' in ds.dims:
+                    ds = ds.isel(phony_dim_1=0)
+
+                mask = (
+                    (ds.lat >= 34) & (ds.lat <= 72) & 
+                    (ds.lon >= -15) & (ds.lon <= 40)
+                )
+                
+                ds_europe = ds.where(mask, drop=True)
+
+                if ds_europe.phony_dim_0.size > 0:
+                    temp_df = ds_europe.to_dataframe().reset_index()
+                    temp_df['date'] = pd.to_datetime(file_date, format='%Y%m%d', errors='coerce')
+                    all_dataframes.append(temp_df)
+                
+                ds.close()
+                ds_europe.close()
+
+            except Exception as e:
+                print(f"{now()} [{rank}]: Error processing {filename}: {e}")
+
+    if not all_dataframes:
+        return pd.DataFrame()
+        
+    final_df = pd.concat(all_dataframes, ignore_index=True)
+    
+    # Remove technical dimension column if it exists
+    if 'phony_dim_0' in final_df.columns:
+        final_df = final_df.drop(columns=['phony_dim_0'])
+        
+    return final_df
 
 
 if __name__ == "__main__":
@@ -155,23 +225,24 @@ if __name__ == "__main__":
 
     elif rank in b_worker_ranks:
         print(f"{now()} [{rank}]: B-Worker active.", flush=True)
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+
         while True:
             comm.send(rank, dest=0, tag=77)
             
             task = comm.recv(source=0, tag=88)
             
             if task is not None:
-
-                # xarray / h5py logic to be implemented here
-                # <...>
-
                 print(f"{now()} [{rank}]: Processing {task}...", flush=True)
                 
-                # Temp: Simulate processing time
-                time.sleep(2) 
                 
-                # Delete files after processing
-                # shutil.rmtree(os.path.join(base_dir, task.lstrip('/')))
+                df = process_day(task, rank, base_dir)
+                clean_name = task.strip('/').replace('/', '_')
+                os.makedirs(os.path.join(base_dir, "Processed_files"), exist_ok=True)
+                csv_path = os.path.join(base_dir, "Processed_files", f"{clean_name}.csv")
+                df.to_csv(csv_path, index=False)
+
+                shutil.rmtree(os.path.join(base_dir, task.lstrip('/')))
                 
                 comm.send(task, dest=0, tag=100)
             else:
