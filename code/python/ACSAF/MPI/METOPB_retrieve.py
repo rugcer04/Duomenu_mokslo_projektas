@@ -8,9 +8,11 @@ import h5py
 import xarray as xr
 import calendar
 import sys
+import glob
 import pandas as pd
 import re
 import shutil
+from datetime import date
 
 
 def now() -> str:
@@ -107,7 +109,6 @@ def process_day(address: str, rank: int, base_dir: str) -> pd.DataFrame:
         
     final_df = pd.concat(all_dataframes, ignore_index=True)
     
-    # Remove technical dimension column if it exists
     if 'phony_dim_0' in final_df.columns:
         final_df = final_df.drop(columns=['phony_dim_0'])
         
@@ -118,6 +119,8 @@ if __name__ == "__main__":
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
     size = comm.Get_size()
+
+    TOTAL_START = time.time()
 
     parser = argparse.ArgumentParser(description="MPI AC SAF data Donwload and Processing")
     parser.add_argument(
@@ -143,9 +146,8 @@ if __name__ == "__main__":
     if rank == 0:
         args = parser.parse_args()
         base_path = "/gome2b/offline/"
-
+        today = date.today()
         years = args.year
-
         creds = {
             'user': args.user,
             'pass': args.key,
@@ -157,7 +159,14 @@ if __name__ == "__main__":
     if rank == 0:
         all_links = []
         for year in years:
+            if year > today.year:
+                continue
+
             for month in range(1, 13):
+                # if year == today.year and month >= today.month:
+                if year == today.year and month >= 2:
+                    break
+
                 _, num_days = calendar.monthrange(year, month)
 
                 for day in range(1, num_days + 1):
@@ -209,6 +218,28 @@ if __name__ == "__main__":
 
             time.sleep(0.01)
 
+        print(f"{now()} [0]: All tasks processed. Sending shutdown signal.", flush=True)
+
+        for worker_rank in b_worker_ranks:
+            comm.send("STOP", dest=worker_rank, tag=88)
+
+        output_base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "processed_results")
+        csv_files = glob.glob(os.path.join(output_base, "*.csv"))
+
+        if csv_files:
+            print(f"{now()} [0]: Merging {len(csv_files)} files into master CSV...", flush=True)
+            master_df = pd.concat([pd.read_csv(f) for f in csv_files])
+            
+            master_df.to_csv("GOME2B_DATA.csv", index=False)
+            
+            for f in csv_files:
+                os.remove(f)
+            print(f"{now()} [0]: Cleanup complete. Master file saved.", flush=True)
+        
+        TOTAL_END = time.time()
+
+        print(f"{now} [0]: Total run duration: {TOTAL_END-TOTAL_START} s")
+
     elif rank in a_worker_ranks:
         try:
             ftp = FTP(creds['host'])
@@ -231,6 +262,10 @@ if __name__ == "__main__":
             comm.send(rank, dest=0, tag=77)
             
             task = comm.recv(source=0, tag=88)
+
+            if task == "STOP":
+                print(f"{now()} [{rank}]: Received STOP signal. Exiting.", flush=True)
+                break
             
             if task is not None:
                 print(f"{now()} [{rank}]: Processing {task}...", flush=True)
@@ -246,4 +281,4 @@ if __name__ == "__main__":
                 
                 comm.send(task, dest=0, tag=100)
             else:
-                time.sleep(5)
+                time.sleep(3)
