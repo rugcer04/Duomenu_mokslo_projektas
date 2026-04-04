@@ -128,7 +128,7 @@ if __name__ == "__main__":
     parser.add_argument("--user", type=str, help="AC SAF DLR naudotojo vardas")
     parser.add_argument("--key", type=str, help="AC SAF DLR slaptažodis")
 
-    num_A_workers = int(round((size - 1) * 0.8, 0))
+    num_A_workers = int(round((size - 1) * 0.9, 0))
     num_B_workers = (size - 1) - num_A_workers
 
     a_worker_ranks = list(range(1, num_A_workers + 1))
@@ -163,7 +163,8 @@ if __name__ == "__main__":
 
                 _, num_days = calendar.monthrange(year, month)
 
-                for day in range(1, num_days + 1):
+                # for day in range(1, num_days + 1):
+                for day in range(1, 9):
                     link = f"{base_path}{year}/{month:02d}/{day:02d}"
                     all_links.append(link)
 
@@ -186,15 +187,21 @@ if __name__ == "__main__":
         processed_count = 0
         total_to_receive = len(all_links)
         processing_pool = []
+        a_workers_finished = 0
+        b_workers_stopped = 0
         
         print(f"{now()} [0]: Orchestrator active. Pool is live.", flush=True)
 
-        while finished_count < total_to_receive:
+        while True:
             if comm.Iprobe(source=MPI.ANY_SOURCE, tag=99):
                 new_address = comm.recv(source=MPI.ANY_SOURCE, tag=99)
                 processing_pool.append(new_address)
                 finished_count += 1
-                print(f"{now()} [0]: Added to pool. Pool size: {len(processing_pool)}", flush=True)
+
+            if comm.Iprobe(source=MPI.ANY_SOURCE, tag=101):
+                _ = comm.recv(source=MPI.ANY_SOURCE, tag=101)
+                a_workers_finished += 1
+                print(f"{now()} [0]: A-worker retired ({a_workers_finished}/{num_A_workers})", flush=True)
 
             if comm.Iprobe(source=MPI.ANY_SOURCE, tag=77):
                 worker_rank = comm.recv(source=MPI.ANY_SOURCE, tag=77)
@@ -203,28 +210,33 @@ if __name__ == "__main__":
                     task = processing_pool.pop(0)
                     comm.send(task, dest=worker_rank, tag=88)
                 else:
-                    comm.send(None, dest=worker_rank, tag=88)
+                    if a_workers_finished == num_A_workers:
+                        comm.send("STOP", dest=worker_rank, tag=88)
+                        b_workers_stopped += 1
+                    else:
+                        comm.send(None, dest=worker_rank, tag=88)
 
             if comm.Iprobe(source=MPI.ANY_SOURCE, tag=100):
-                done_task = comm.recv(source=MPI.ANY_SOURCE, tag=100)
+                _ = comm.recv(source=MPI.ANY_SOURCE, tag=100)
                 processed_count += 1
-                print(f"{now()} [0]: Processed total: {processed_count}/{total_to_receive}", flush=True)
+                print(f"{now()} [0]: Processed {processed_count}/{total_to_receive}", flush=True)
+
+            if a_workers_finished == num_A_workers and not processing_pool and b_workers_stopped == num_B_workers:
+                print(f"{now()} [0]: All workers finished. Breaking loop.", flush=True)
+                break
 
             time.sleep(0.01)
 
         print(f"{now()} [0]: All tasks processed. Sending shutdown signal.", flush=True)
 
-        for worker_rank in b_worker_ranks:
-            comm.send("STOP", dest=worker_rank, tag=88)
-
-        output_base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "processed_results")
+        output_base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Processed_files")
         csv_files = glob.glob(os.path.join(output_base, "*.csv"))
 
         if csv_files:
             print(f"{now()} [0]: Merging {len(csv_files)} files into master CSV...", flush=True)
             master_df = pd.concat([pd.read_csv(f) for f in csv_files])
             
-            master_df.to_csv("GOME2B_DATA.csv", index=False)
+            master_df.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "GOME2B_DATA.csv"), index=False)
             
             for f in csv_files:
                 os.remove(f)
@@ -247,6 +259,9 @@ if __name__ == "__main__":
             ftp.quit()
         except Exception as e:
             print(f"{now()} [{rank}]: FTP Error: {e}", flush=True)
+        finally:
+            comm.send("DONE", dest=0, tag=101)
+            print(f"{now()} [{rank}]: Closed FTP and signaled Rank 0.")
 
     elif rank in b_worker_ranks:
         print(f"{now()} [{rank}]: B-Worker active.", flush=True)
@@ -261,7 +276,7 @@ if __name__ == "__main__":
                 print(f"{now()} [{rank}]: Received STOP signal. Exiting.", flush=True)
                 break
             
-            if task is not None:
+            elif task is not None:
                 print(f"{now()} [{rank}]: Processing {task}...", flush=True)
                 
                 
