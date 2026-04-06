@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/scratch/lustre/home/krke0439/GOME/METOPB_retrieve.py", line 235, in <module>
+    master_df = pd.concat([pd.read_csv(f) for f in csv_files])
+  File "/scratch/lustre/home/krke0439/GOME/METOPB_retrieve.py", line 235, in <listcomp>
+    master_df = pd.concat([pd.read_csv(f) for f in csv_files])
+  File "/scratch/lustre/home/krke0439/.local/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/scratch/lustre/home/krke0439/.local/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/scratch/lustre/home/krke0439/.local/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/scratch/lustre/home/krke0439/.local/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1898, in _make_engine
+    return mapping[engine](f, **self.options)
+  File "/scratch/lustre/home/krke0439/.local/lib/python3.10/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 93, in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+  File "pandas/_libs/parsers.pyx", line 581, in pandas._libs.parsers.TextReader.__cinit__
+pandas.errors.EmptyDataError: No columns to parse from file
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[19705,1],0]
+  Exit code:    1
+--------------------------------------------------------------------------

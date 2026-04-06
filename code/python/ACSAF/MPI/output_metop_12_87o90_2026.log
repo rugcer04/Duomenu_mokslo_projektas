@@ -1,0 +1,311 @@
+16:06:07 [11]: B-Worker ready for processing.
+16:06:07 [11]: B-Worker active.
+16:06:07 [10]: B-Worker ready for processing.
+16:06:07 [10]: B-Worker active.
+16:06:07 [0]: Prepared 90 total daily links.
+16:06:07 [2]: A-Worker received 10 days to fetch.
+16:06:07 [3]: A-Worker received 10 days to fetch.
+16:06:07 [1]: A-Worker received 10 days to fetch.
+16:06:07 [4]: A-Worker received 10 days to fetch.
+16:06:07 [5]: A-Worker received 10 days to fetch.
+16:06:07 [0]: Orchestrator active. Pool is live.
+16:06:07 [6]: A-Worker received 10 days to fetch.
+16:06:07 [7]: A-Worker received 10 days to fetch.
+16:06:07 [8]: A-Worker received 10 days to fetch.
+16:06:07 [9]: A-Worker received 10 days to fetch.
+16:06:07 [1]: FTP Connected.
+16:06:07 [8]: FTP Connected.
+16:06:07 [3]: FTP Connected.
+16:06:07 [5]: FTP Connected.
+16:06:07 [9]: FTP Connected.
+16:06:07 [4]: FTP Connected.
+16:06:07 [6]: FTP Connected.
+16:06:07 [7]: FTP Connected.
+16:06:07 [2]: FTP Connected.
+16:06:27 [3]: Finished: /gome2b/offline/2026/01/21.
+16:06:28 [11]: Processing /gome2b/offline/2026/01/21...
+16:06:32 [0]: Processed 1/90
+16:06:36 [4]: Finished: /gome2b/offline/2026/01/31.
+16:06:37 [10]: Processing /gome2b/offline/2026/01/31...
+16:06:37 [5]: Finished: /gome2b/offline/2026/02/10.
+16:06:38 [11]: Processing /gome2b/offline/2026/02/10...
+16:06:41 [0]: Processed 2/90
+16:06:42 [0]: Processed 3/90
+16:06:49 [1]: Finished: /gome2b/offline/2026/01/01.
+16:06:50 [10]: Processing /gome2b/offline/2026/01/01...
+16:06:53 [0]: Processed 4/90
+16:06:55 [6]: Finished: /gome2b/offline/2026/02/20.
+16:06:56 [10]: Processing /gome2b/offline/2026/02/20...
+16:06:59 [9]: Finished: /gome2b/offline/2026/03/22.
+16:07:00 [11]: Processing /gome2b/offline/2026/03/22...
+16:07:00 [0]: Processed 5/90
+16:07:03 [8]: Finished: /gome2b/offline/2026/03/12.
+16:07:03 [11]: Processing /gome2b/offline/2026/03/12...
+16:07:03 [0]: Processed 6/90
+16:07:03 [3]: Finished: /gome2b/offline/2026/01/22.
+16:07:04 [2]: Finished: /gome2b/offline/2026/01/11.
+16:07:06 [10]: Processing /gome2b/offline/2026/01/22...
+16:07:07 [11]: Processing /gome2b/offline/2026/01/11...
+16:07:07 [0]: Processed 7/90
+16:07:10 [0]: Processed 8/90
+16:07:11 [0]: Processed 9/90
+16:07:19 [4]: Finished: /gome2b/offline/2026/02/01.
+16:07:20 [11]: Processing /gome2b/offline/2026/02/01...
+16:07:20 [1]: Finished: /gome2b/offline/2026/01/02.
+16:07:22 [10]: Processing /gome2b/offline/2026/01/02...
+16:07:24 [0]: Processed 10/90
+16:07:26 [3]: Finished: /gome2b/offline/2026/01/23.
+16:07:26 [10]: Processing /gome2b/offline/2026/01/23...
+16:07:26 [0]: Processed 11/90
+16:07:30 [0]: Processed 12/90
+16:07:30 [6]: Finished: /gome2b/offline/2026/02/21.
+16:07:33 [10]: Processing /gome2b/offline/2026/02/21...
+16:07:34 [7]: Finished: /gome2b/offline/2026/03/02.
+16:07:36 [11]: Processing /gome2b/offline/2026/03/02...
+16:07:37 [0]: Processed 13/90
+16:07:40 [0]: Processed 14/90
+16:07:44 [9]: Finished: /gome2b/offline/2026/03/23.
+16:07:46 [10]: Processing /gome2b/offline/2026/03/23...
+16:07:49 [5]: Finished: /gome2b/offline/2026/02/11.
+16:07:49 [11]: Processing /gome2b/offline/2026/02/11...
+16:07:49 [0]: Processed 15/90
+16:07:52 [8]: Finished: /gome2b/offline/2026/03/13.
+16:07:52 [10]: Processing /gome2b/offline/2026/03/13...
+16:07:53 [0]: Processed 16/90
+16:07:56 [0]: Processed 17/90
+16:08:00 [4]: Finished: /gome2b/offline/2026/02/02.
+16:08:02 [11]: Processing /gome2b/offline/2026/02/02...
+16:08:05 [2]: Finished: /gome2b/offline/2026/01/12.
+16:08:06 [11]: Processing /gome2b/offline/2026/01/12...
+16:08:06 [0]: Processed 18/90
+16:08:06 [3]: Finished: /gome2b/offline/2026/01/24.
+16:08:06 [1]: Finished: /gome2b/offline/2026/01/03.
+16:08:08 [10]: Processing /gome2b/offline/2026/01/24...
+16:08:08 [7]: Finished: /gome2b/offline/2026/03/03.
+16:08:10 [11]: Processing /gome2b/offline/2026/01/03...
+16:08:10 [0]: Processed 19/90
+16:08:11 [6]: Finished: /gome2b/offline/2026/02/22.
+16:08:12 [10]: Processing /gome2b/offline/2026/03/03...
+16:08:12 [0]: Processed 20/90
+16:08:14 [0]: Processed 21/90
+16:08:14 [11]: Processing /gome2b/offline/2026/02/22...
+16:08:14 [9]: Finished: /gome2b/offline/2026/03/24.
+16:08:16 [10]: Processing /gome2b/offline/2026/03/24...
+16:08:16 [0]: Processed 22/90
+16:08:17 [0]: Processed 23/90
+16:08:19 [0]: Processed 24/90
+16:08:29 [5]: Finished: /gome2b/offline/2026/02/12.
+16:08:29 [11]: Processing /gome2b/offline/2026/02/12...
+16:08:30 [8]: Finished: /gome2b/offline/2026/03/14.
+16:08:31 [10]: Processing /gome2b/offline/2026/03/14...
+16:08:33 [0]: Processed 25/90
+16:08:35 [0]: Processed 26/90
+16:08:39 [1]: Finished: /gome2b/offline/2026/01/04.
+16:08:39 [6]: Finished: /gome2b/offline/2026/02/23.
+16:08:41 [10]: Processing /gome2b/offline/2026/01/04...
+16:08:42 [11]: Processing /gome2b/offline/2026/02/23...
+16:08:45 [0]: Processed 27/90
+16:08:46 [0]: Processed 28/90
+16:08:49 [3]: Finished: /gome2b/offline/2026/01/25.
+16:08:49 [11]: Processing /gome2b/offline/2026/01/25...
+16:08:52 [0]: Processed 29/90
+16:08:58 [5]: Finished: /gome2b/offline/2026/02/13.
+16:08:58 [11]: Processing /gome2b/offline/2026/02/13...
+16:09:01 [9]: Finished: /gome2b/offline/2026/03/25.
+16:09:01 [8]: Finished: /gome2b/offline/2026/03/15.
+16:09:01 [1]: Finished: /gome2b/offline/2026/01/05.
+16:09:02 [11]: Processing /gome2b/offline/2026/03/25...
+16:09:02 [0]: Processed 30/90
+16:09:03 [10]: Processing /gome2b/offline/2026/03/15...
+16:09:06 [11]: Processing /gome2b/offline/2026/01/05...
+16:09:06 [0]: Processed 31/90
+16:09:07 [0]: Processed 32/90
+16:09:09 [0]: Processed 33/90
+16:09:12 [4]: Finished: /gome2b/offline/2026/02/03.
+16:09:12 [2]: Finished: /gome2b/offline/2026/01/13.
+16:09:12 [11]: Processing /gome2b/offline/2026/02/03...
+16:09:13 [10]: Processing /gome2b/offline/2026/01/13...
+16:09:16 [0]: Processed 34/90
+16:09:16 [0]: Processed 35/90
+16:09:19 [7]: Finished: /gome2b/offline/2026/03/04.
+16:09:19 [11]: Processing /gome2b/offline/2026/03/04...
+16:09:23 [0]: Processed 36/90
+16:09:34 [2]: Finished: /gome2b/offline/2026/01/14.
+16:09:34 [10]: Processing /gome2b/offline/2026/01/14...
+16:09:35 [6]: Finished: /gome2b/offline/2026/02/24.
+16:09:38 [8]: Finished: /gome2b/offline/2026/03/16.
+16:09:38 [11]: Processing /gome2b/offline/2026/02/24...
+16:09:38 [0]: Processed 37/90
+16:09:38 [10]: Processing /gome2b/offline/2026/03/16...
+16:09:38 [3]: Finished: /gome2b/offline/2026/01/26.
+16:09:42 [11]: Processing /gome2b/offline/2026/01/26...
+16:09:42 [0]: Processed 38/90
+16:09:42 [0]: Processed 39/90
+16:09:45 [9]: Finished: /gome2b/offline/2026/03/26.
+16:09:45 [10]: Processing /gome2b/offline/2026/03/26...
+16:09:45 [0]: Processed 40/90
+16:09:47 [5]: Finished: /gome2b/offline/2026/02/14.
+16:09:48 [11]: Processing /gome2b/offline/2026/02/14...
+16:09:49 [0]: Processed 41/90
+16:09:52 [0]: Processed 42/90
+16:09:54 [1]: Finished: /gome2b/offline/2026/01/06.
+16:09:55 [11]: Processing /gome2b/offline/2026/01/06...
+16:09:59 [0]: Processed 43/90
+16:10:08 [9]: Finished: /gome2b/offline/2026/03/27.
+16:10:08 [11]: Processing /gome2b/offline/2026/03/27...
+16:10:08 [1]: Finished: /gome2b/offline/2026/01/07.
+16:10:08 [1]: FTP Error: 550 /gome2b/offline/2026/01/08: No such file or directory
+16:10:08 [1]: Closed FTP and signaled Rank 0.
+16:10:08 [0]: A-worker retired (1/9)
+16:10:10 [10]: Processing /gome2b/offline/2026/01/07...
+16:10:12 [0]: Processed 44/90
+16:10:13 [0]: Processed 45/90
+16:10:14 [3]: Finished: /gome2b/offline/2026/01/27.
+16:10:15 [11]: Processing /gome2b/offline/2026/01/27...
+16:10:15 [5]: Finished: /gome2b/offline/2026/02/15.
+16:10:16 [10]: Processing /gome2b/offline/2026/02/15...
+16:10:17 [2]: Finished: /gome2b/offline/2026/01/15.
+16:10:19 [0]: Processed 46/90
+16:10:19 [11]: Processing /gome2b/offline/2026/01/15...
+16:10:20 [0]: Processed 47/90
+16:10:20 [4]: Finished: /gome2b/offline/2026/02/04.
+16:10:21 [8]: Finished: /gome2b/offline/2026/03/17.
+16:10:22 [11]: Processing /gome2b/offline/2026/02/04...
+16:10:22 [0]: Processed 48/90
+16:10:23 [10]: Processing /gome2b/offline/2026/03/17...
+16:10:26 [0]: Processed 49/90
+16:10:27 [0]: Processed 50/90
+16:10:28 [7]: Finished: /gome2b/offline/2026/03/05.
+16:10:29 [11]: Processing /gome2b/offline/2026/03/05...
+16:10:33 [0]: Processed 51/90
+16:10:36 [3]: Finished: /gome2b/offline/2026/01/28.
+16:10:39 [10]: Processing /gome2b/offline/2026/01/28...
+16:10:39 [9]: Finished: /gome2b/offline/2026/03/28.
+16:10:42 [11]: Processing /gome2b/offline/2026/03/28...
+16:10:42 [0]: Processed 52/90
+16:10:46 [0]: Processed 53/90
+16:10:46 [6]: Finished: /gome2b/offline/2026/02/25.
+16:10:48 [10]: Processing /gome2b/offline/2026/02/25...
+16:10:52 [0]: Processed 54/90
+16:10:57 [2]: Finished: /gome2b/offline/2026/01/16.
+16:10:58 [4]: Finished: /gome2b/offline/2026/02/05.
+16:10:58 [11]: Processing /gome2b/offline/2026/01/16...
+16:10:58 [10]: Processing /gome2b/offline/2026/02/05...
+16:11:02 [0]: Processed 55/90
+16:11:02 [3]: Finished: /gome2b/offline/2026/01/29.
+16:11:02 [0]: Processed 56/90
+16:11:04 [8]: Finished: /gome2b/offline/2026/03/18.
+16:11:05 [11]: Processing /gome2b/offline/2026/01/29...
+16:11:05 [10]: Processing /gome2b/offline/2026/03/18...
+16:11:08 [0]: Processed 57/90
+16:11:09 [0]: Processed 58/90
+16:11:17 [7]: Finished: /gome2b/offline/2026/03/06.
+16:11:17 [11]: Processing /gome2b/offline/2026/03/06...
+16:11:18 [5]: Finished: /gome2b/offline/2026/02/16.
+16:11:18 [10]: Processing /gome2b/offline/2026/02/16...
+16:11:21 [0]: Processed 59/90
+16:11:22 [0]: Processed 60/90
+16:11:23 [2]: Finished: /gome2b/offline/2026/01/17.
+16:11:24 [11]: Processing /gome2b/offline/2026/01/17...
+16:11:27 [4]: Finished: /gome2b/offline/2026/02/06.
+16:11:28 [10]: Processing /gome2b/offline/2026/02/06...
+16:11:28 [0]: Processed 61/90
+16:11:29 [6]: Finished: /gome2b/offline/2026/02/26.
+16:11:31 [11]: Processing /gome2b/offline/2026/02/26...
+16:11:32 [0]: Processed 62/90
+16:11:35 [8]: Finished: /gome2b/offline/2026/03/19.
+16:11:35 [11]: Processing /gome2b/offline/2026/03/19...
+16:11:35 [0]: Processed 63/90
+16:11:39 [0]: Processed 64/90
+16:11:43 [9]: Finished: /gome2b/offline/2026/03/29.
+16:11:44 [10]: Processing /gome2b/offline/2026/03/29...
+16:11:47 [0]: Processed 65/90
+16:11:50 [4]: Finished: /gome2b/offline/2026/02/07.
+16:11:50 [10]: Processing /gome2b/offline/2026/02/07...
+16:11:51 [2]: Finished: /gome2b/offline/2026/01/18.
+16:11:54 [3]: Finished: /gome2b/offline/2026/01/30.
+16:11:54 [11]: Processing /gome2b/offline/2026/01/18...
+16:11:54 [3]: Closed FTP and signaled Rank 0.
+16:11:54 [0]: A-worker retired (2/9)
+16:11:54 [0]: Processed 66/90
+16:11:54 [10]: Processing /gome2b/offline/2026/01/30...
+16:11:54 [5]: Finished: /gome2b/offline/2026/02/17.
+16:11:58 [10]: Processing /gome2b/offline/2026/02/17...
+16:11:58 [0]: Processed 67/90
+16:11:58 [0]: Processed 68/90
+16:12:01 [0]: Processed 69/90
+16:12:05 [7]: Finished: /gome2b/offline/2026/03/07.
+16:12:07 [11]: Processing /gome2b/offline/2026/03/07...
+16:12:10 [0]: Processed 70/90
+16:12:16 [8]: Finished: /gome2b/offline/2026/03/20.
+16:12:17 [10]: Processing /gome2b/offline/2026/03/20...
+16:12:20 [0]: Processed 71/90
+16:12:23 [6]: Finished: /gome2b/offline/2026/02/27.
+16:12:23 [5]: Finished: /gome2b/offline/2026/02/18.
+16:12:23 [10]: Processing /gome2b/offline/2026/02/27...
+16:12:25 [11]: Processing /gome2b/offline/2026/02/18...
+16:12:26 [2]: Finished: /gome2b/offline/2026/01/19.
+16:12:27 [0]: Processed 72/90
+16:12:27 [10]: Processing /gome2b/offline/2026/01/19...
+16:12:28 [9]: Finished: /gome2b/offline/2026/03/30.
+16:12:29 [0]: Processed 73/90
+16:12:29 [11]: Processing /gome2b/offline/2026/03/30...
+16:12:30 [4]: Finished: /gome2b/offline/2026/02/08.
+16:12:31 [0]: Processed 74/90
+16:12:31 [10]: Processing /gome2b/offline/2026/02/08...
+16:12:33 [0]: Processed 75/90
+16:12:35 [0]: Processed 76/90
+16:12:49 [6]: Finished: /gome2b/offline/2026/02/28.
+16:12:49 [8]: Finished: /gome2b/offline/2026/03/21.
+16:12:49 [8]: Closed FTP and signaled Rank 0.
+16:12:49 [0]: A-worker retired (3/9)
+16:12:50 [10]: Processing /gome2b/offline/2026/02/28...
+16:12:51 [11]: Processing /gome2b/offline/2026/03/21...
+16:12:54 [0]: Processed 77/90
+16:12:56 [0]: Processed 78/90
+16:12:57 [2]: Finished: /gome2b/offline/2026/01/20.
+16:12:57 [2]: Closed FTP and signaled Rank 0.
+16:12:57 [0]: A-worker retired (4/9)
+16:12:59 [11]: Processing /gome2b/offline/2026/01/20...
+16:13:02 [0]: Processed 79/90
+16:13:03 [9]: Finished: /gome2b/offline/2026/03/31.
+16:13:04 [9]: Closed FTP and signaled Rank 0.
+16:13:04 [0]: A-worker retired (5/9)
+16:13:05 [11]: Processing /gome2b/offline/2026/03/31...
+16:13:06 [4]: Finished: /gome2b/offline/2026/02/09.
+16:13:06 [4]: Closed FTP and signaled Rank 0.
+16:13:06 [0]: A-worker retired (6/9)
+16:13:09 [10]: Processing /gome2b/offline/2026/02/09...
+16:13:09 [0]: Processed 80/90
+16:13:10 [7]: Finished: /gome2b/offline/2026/03/08.
+16:13:11 [6]: Finished: /gome2b/offline/2026/03/01.
+16:13:11 [6]: Closed FTP and signaled Rank 0.
+16:13:11 [0]: A-worker retired (7/9)
+16:13:12 [11]: Processing /gome2b/offline/2026/03/08...
+16:13:13 [0]: Processed 81/90
+16:13:13 [10]: Processing /gome2b/offline/2026/03/01...
+16:13:16 [0]: Processed 82/90
+16:13:17 [0]: Processed 83/90
+16:13:18 [5]: Finished: /gome2b/offline/2026/02/19.
+16:13:18 [5]: Closed FTP and signaled Rank 0.
+16:13:18 [0]: A-worker retired (8/9)
+16:13:19 [11]: Processing /gome2b/offline/2026/02/19...
+16:13:23 [0]: Processed 84/90
+16:13:27 [7]: Finished: /gome2b/offline/2026/03/09.
+16:13:29 [10]: Processing /gome2b/offline/2026/03/09...
+16:13:33 [0]: Processed 85/90
+16:13:45 [7]: Finished: /gome2b/offline/2026/03/10.
+16:13:47 [11]: Processing /gome2b/offline/2026/03/10...
+16:13:51 [0]: Processed 86/90
+16:14:04 [7]: Finished: /gome2b/offline/2026/03/11.
+16:14:04 [7]: Closed FTP and signaled Rank 0.
+16:14:04 [0]: A-worker retired (9/9)
+16:14:06 [10]: Processing /gome2b/offline/2026/03/11...
+16:14:06 [11]: Received STOP signal. Exiting.
+16:14:10 [0]: Processed 87/90
+16:14:10 [0]: All workers finished. Breaking loop.
+16:14:10 [0]: All tasks processed. Sending shutdown signal.
+16:14:10 [10]: Received STOP signal. Exiting.
+16:14:10 [0]: Merging 87 files into master CSV...
+16:14:12 [0]: Cleanup complete. Master file saved.
+<function now at 0x14f872b77d90> [0]: Total run duration: 484.9317810535431 s

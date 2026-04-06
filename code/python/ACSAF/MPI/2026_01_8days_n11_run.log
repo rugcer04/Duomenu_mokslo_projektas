@@ -1,0 +1,68 @@
+19:45:42 [0]: Prepared 8 total daily links.
+19:45:42 [10]: B-Worker ready for processing.
+19:45:42 [10]: B-Worker active.
+19:45:42 [2]: A-Worker received 1 days to fetch.
+19:45:42 [4]: A-Worker received 1 days to fetch.
+19:45:42 [3]: A-Worker received 1 days to fetch.
+19:45:42 [5]: A-Worker received 1 days to fetch.
+19:45:42 [8]: A-Worker received 1 days to fetch.
+19:45:42 [6]: A-Worker received 1 days to fetch.
+19:45:42 [0]: Orchestrator active. Pool is live.
+19:45:42 [7]: A-Worker received 1 days to fetch.
+19:45:42 [1]: A-Worker received 1 days to fetch.
+19:45:42 [9]: A-Worker received 0 days to fetch.
+19:45:42 [3]: FTP Connected.
+19:45:42 [7]: FTP Connected.
+19:45:42 [2]: FTP Connected.
+19:45:42 [1]: FTP Connected.
+19:45:42 [8]: FTP Connected.
+19:45:42 [4]: FTP Connected.
+19:45:42 [9]: FTP Connected.
+19:45:42 [6]: FTP Connected.
+19:45:42 [5]: FTP Connected.
+19:45:42 [9]: Closed FTP and signaled Rank 0.
+19:45:42 [0]: A-worker retired (1/9)
+19:45:42 [8]: FTP Error: 550 /gome2b/offline/2026/01/08: No such file or directory
+19:45:42 [8]: Closed FTP and signaled Rank 0.
+19:45:42 [0]: A-worker retired (2/9)
+19:50:30 [7]: Finished: /gome2b/offline/2026/01/07.
+19:50:30 [7]: Closed FTP and signaled Rank 0.
+19:50:30 [0]: A-worker retired (3/9)
+19:50:33 [10]: Processing /gome2b/offline/2026/01/07...
+19:50:35 [0]: Processed 1/8
+19:51:36 [1]: Finished: /gome2b/offline/2026/01/01.
+19:51:37 [1]: Closed FTP and signaled Rank 0.
+19:51:37 [0]: A-worker retired (4/9)
+19:51:38 [10]: Processing /gome2b/offline/2026/01/01...
+19:51:40 [0]: Processed 2/8
+19:52:18 [2]: Finished: /gome2b/offline/2026/01/02.
+19:52:18 [2]: Closed FTP and signaled Rank 0.
+19:52:18 [0]: A-worker retired (5/9)
+19:52:19 [10]: Processing /gome2b/offline/2026/01/02...
+19:52:21 [0]: Processed 3/8
+19:52:21 [5]: Finished: /gome2b/offline/2026/01/05.
+19:52:22 [5]: Closed FTP and signaled Rank 0.
+19:52:22 [0]: A-worker retired (6/9)
+19:52:23 [4]: Finished: /gome2b/offline/2026/01/04.
+19:52:23 [4]: Closed FTP and signaled Rank 0.
+19:52:23 [0]: A-worker retired (7/9)
+19:52:24 [10]: Processing /gome2b/offline/2026/01/05...
+19:52:25 [10]: Processing /gome2b/offline/2026/01/04...
+19:52:25 [0]: Processed 4/8
+19:52:27 [0]: Processed 5/8
+19:52:29 [3]: Finished: /gome2b/offline/2026/01/03.
+19:52:29 [3]: Closed FTP and signaled Rank 0.
+19:52:29 [0]: A-worker retired (8/9)
+19:52:30 [10]: Processing /gome2b/offline/2026/01/03...
+19:52:31 [6]: Finished: /gome2b/offline/2026/01/06.
+19:52:31 [6]: Closed FTP and signaled Rank 0.
+19:52:31 [0]: A-worker retired (9/9)
+19:52:31 [10]: Processing /gome2b/offline/2026/01/06...
+19:52:31 [0]: Processed 6/8
+19:52:33 [0]: Processed 7/8
+19:52:33 [10]: Received STOP signal. Exiting.
+19:52:33 [0]: All workers finished. Breaking loop.
+19:52:33 [0]: All tasks processed. Sending shutdown signal.
+19:52:33 [0]: Merging 7 files into master CSV...
+19:52:33 [0]: Cleanup complete. Master file saved.
+<function now at 0x0000018ECCF00F40> [0]: Total run duration: 411.6638357639313 s
