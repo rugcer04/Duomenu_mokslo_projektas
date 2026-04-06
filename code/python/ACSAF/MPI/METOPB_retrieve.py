@@ -128,7 +128,7 @@ if __name__ == "__main__":
     parser.add_argument("--user", type=str, help="AC SAF DLR naudotojo vardas")
     parser.add_argument("--key", type=str, help="AC SAF DLR slaptažodis")
 
-    num_A_workers = int(round((size - 1) * 0.9, 0))
+    num_A_workers = int(round((size - 1) * 0.8, 0))
     num_B_workers = (size - 1) - num_A_workers
 
     a_worker_ranks = list(range(1, num_A_workers + 1))
@@ -157,14 +157,12 @@ if __name__ == "__main__":
                 continue
 
             for month in range(1, 13):
-                # if year == today.year and month >= today.month:
-                if year == today.year and month >= 2:
+                if year == today.year and month >= today.month:
                     break
 
                 _, num_days = calendar.monthrange(year, month)
 
-                # for day in range(1, num_days + 1):
-                for day in range(1, 9):
+                for day in range(1, num_days + 1):
                     link = f"{base_path}{year}/{month:02d}/{day:02d}"
                     all_links.append(link)
 
