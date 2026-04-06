@@ -232,9 +232,18 @@ if __name__ == "__main__":
 
         if csv_files:
             print(f"{now()} [0]: Merging {len(csv_files)} files into master CSV...", flush=True)
-            master_df = pd.concat([pd.read_csv(f) for f in csv_files])
+
+            Partial_END = time.time()
+
+            print(f"{now} [0]: Until merge run duration: {Partial_END-TOTAL_START} s")
+
+            master_df = pd.concat([
+                pd.read_csv(f) for f in csv_files 
+                if os.path.exists(f) and os.path.getsize(f) > 1
+            ])
             
             master_df.to_csv(os.path.join(os.path.dirname(os.path.abspath(__file__)), "GOME2B_DATA.csv"), index=False)
+            
             
             for f in csv_files:
                 os.remove(f)
