@@ -5,31 +5,55 @@ import numpy as np
 import os
 from concurrent.futures import ProcessPoolExecutor
 
-#PARMAS=============================
+#PARAMS=============================
 # 'aer': "Aerosol_Index"
 # 'clo': "Cloud"
 # 'nit': "Nitrogen"
 # 'oze': "Ozone"
 # 'car': "Carbon"
+# 'for': "Formaldehyde"
+# 'sul': "Sulfur"
+# 'met': "Methane"
 
-ID = "oze"
+ID = "met"
 LT_TIME = True
+
+# "Vilnius"
+# "Klaipeda"
+# "Ryga"
+CITY = 'Ryga'
 #===================================
 
 ALL_PRODUCTS = {'aer': "Aerosol_Index",
                 'clo': "Cloud",
                 'nit': "Nitrogen",
                 'oze': "Ozone",
-                'car': "Carbon"}
+                'car': "Carbon",
+                'for': "Formaldehyde",
+                'sul': "Sulfur",
+                'met': "Methane"}
+lon_lat_bank = {
+        "Vilnius": {"lon": 25.2797, "lat": 54.6872, "file_end": 'vilnius'},
+        "Klaipeda": {"lon": 21.1333, "lat": 55.7167, "file_end": 'klaipeda'},
+        "Ryga": {"lon": 24.1052, "lat": 56.9496, "file_end": 'ryga'}
+    }
+COORD = lon_lat_bank[CITY]
 PRODUCT_NAME = ALL_PRODUCTS[ID]
-CSV_OUTPUT = f'sentinel_data\\lithuania_{PRODUCT_NAME.lower()}_vilnius.csv'
-FOLDER_TO_PROCESS = f"S5P_{PRODUCT_NAME}"
+CSV_OUTPUT = f'sentinel_data\\lithuania_{PRODUCT_NAME.lower()}_{COORD["file_end"]}.csv'
+
+if CITY == 'Ryga':
+    FOLDER_TO_PROCESS = f"S5P_{PRODUCT_NAME}_Ryga"
+else:
+    FOLDER_TO_PROCESS = f"S5P_{PRODUCT_NAME}"
+
+if CITY == 'Ryga' and ID == 'aer':
+    FOLDER_TO_PROCESS = f"S5P_Aerosol_Ryga"
+
 base_path = Path(os.getcwd())
 FOLDER = os.path.join(base_path, 'sentinel_data', FOLDER_TO_PROCESS)
 nc_files = [f for f in os.listdir(FOLDER) if f.endswith('.nc')]
 
 def prepare_dataset(file_path):
-    vilnius_lon, vilnius_lat = 25.2797, 54.6872
     full_path = os.path.join(FOLDER, file_path)
     
     try:
@@ -37,8 +61,8 @@ def prepare_dataset(file_path):
             
             print(f"[{file_path}]: boxing.")
             ds_box = ds.sel(
-                lon=slice(vilnius_lon - 0.25, vilnius_lon + 0.25),
-                lat=slice(vilnius_lat - 0.25, vilnius_lat + 0.25))
+                lon=slice(COORD["lon"] - 0.25, COORD["lon"] + 0.25),
+                lat=slice(COORD["lat"] - 0.25, COORD["lat"] + 0.25))
 
             # print(f"[{file_path}]: grouping.")
             #ds_box = ds_box.groupby('time').mean()

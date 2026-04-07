@@ -1,0 +1,220 @@
+15:48:15 [0]: Prepared 31 total daily links.
+15:48:15 [0]: Orchestrator active. Pool is live.
+15:48:15 [32]: A-Worker received 0 days to fetch.
+15:48:15 [16]: A-Worker received 1 days to fetch.
+15:48:15 [8]: A-Worker received 1 days to fetch.
+15:48:15 [24]: A-Worker received 1 days to fetch.
+15:48:15 [1]: A-Worker received 1 days to fetch.
+15:48:15 [5]: A-Worker received 1 days to fetch.
+15:48:15 [17]: A-Worker received 1 days to fetch.
+15:48:15 [37]: A-Worker received 0 days to fetch.
+15:48:15 [19]: A-Worker received 1 days to fetch.
+15:48:15 [39]: A-Worker received 0 days to fetch.
+15:48:15 [3]: A-Worker received 1 days to fetch.
+15:48:15 [7]: A-Worker received 1 days to fetch.
+15:48:15 [15]: A-Worker received 1 days to fetch.
+15:48:15 [47]: B-Worker ready for processing.
+15:48:15 [47]: B-Worker active.
+15:48:15 [33]: A-Worker received 0 days to fetch.
+15:48:15 [21]: A-Worker received 1 days to fetch.
+15:48:15 [18]: A-Worker received 1 days to fetch.
+15:48:15 [26]: A-Worker received 1 days to fetch.
+15:48:15 [34]: A-Worker received 0 days to fetch.
+15:48:15 [38]: A-Worker received 0 days to fetch.
+15:48:15 [42]: A-Worker received 0 days to fetch.
+15:48:15 [46]: B-Worker ready for processing.
+15:48:15 [46]: B-Worker active.
+15:48:15 [2]: A-Worker received 1 days to fetch.
+15:48:15 [6]: A-Worker received 1 days to fetch.
+15:48:15 [10]: A-Worker received 1 days to fetch.
+15:48:15 [14]: A-Worker received 1 days to fetch.
+15:48:15 [41]: A-Worker received 0 days to fetch.
+15:48:15 [9]: A-Worker received 1 days to fetch.
+15:48:15 [25]: A-Worker received 1 days to fetch.
+15:48:15 [35]: A-Worker received 0 days to fetch.
+15:48:15 [36]: A-Worker received 0 days to fetch.
+15:48:15 [4]: A-Worker received 1 days to fetch.
+15:48:15 [20]: A-Worker received 1 days to fetch.
+15:48:15 [28]: A-Worker received 1 days to fetch.
+15:48:15 [44]: B-Worker ready for processing.
+15:48:15 [44]: B-Worker active.
+15:48:15 [12]: A-Worker received 1 days to fetch.
+15:48:15 [13]: A-Worker received 1 days to fetch.
+15:48:15 [29]: A-Worker received 1 days to fetch.
+15:48:15 [45]: B-Worker ready for processing.
+15:48:15 [45]: B-Worker active.
+15:48:15 [43]: B-Worker ready for processing.
+15:48:15 [43]: B-Worker active.
+15:48:15 [11]: A-Worker received 1 days to fetch.
+15:48:15 [40]: A-Worker received 0 days to fetch.
+15:48:15 [27]: A-Worker received 1 days to fetch.
+15:48:15 [30]: A-Worker received 1 days to fetch.
+15:48:15 [22]: A-Worker received 1 days to fetch.
+15:48:15 [31]: A-Worker received 1 days to fetch.
+15:48:15 [23]: A-Worker received 1 days to fetch.
+15:48:15 [28]: FTP Error: 
+15:48:15 [28]: Closed FTP and signaled Rank 0.
+15:48:15 [11]: FTP Error: 
+15:48:15 [11]: Closed FTP and signaled Rank 0.
+15:48:15 [38]: FTP Error: 
+15:48:15 [38]: Closed FTP and signaled Rank 0.
+15:48:15 [40]: FTP Error: 
+15:48:15 [0]: A-worker retired (1/42)
+15:48:15 [6]: FTP Error: 
+15:48:15 [40]: Closed FTP and signaled Rank 0.
+15:48:15 [25]: FTP Error: 
+15:48:15 [41]: FTP Error: 
+15:48:15 [6]: Closed FTP and signaled Rank 0.
+15:48:15 [41]: Closed FTP and signaled Rank 0.
+15:48:15 [35]: FTP Error: 
+15:48:15 [25]: Closed FTP and signaled Rank 0.
+15:48:15 [35]: Closed FTP and signaled Rank 0.
+15:48:15 [36]: FTP Error: 
+15:48:15 [36]: Closed FTP and signaled Rank 0.
+15:48:15 [20]: FTP Error: 
+15:48:15 [27]: FTP Error: 
+15:48:15 [27]: Closed FTP and signaled Rank 0.
+15:48:15 [20]: Closed FTP and signaled Rank 0.
+15:48:15 [29]: FTP Error: 
+15:48:15 [29]: Closed FTP and signaled Rank 0.
+15:48:15 [14]: FTP Error: 
+15:48:15 [14]: Closed FTP and signaled Rank 0.
+15:48:15 [2]: FTP Error: 
+15:48:15 [9]: FTP Error: 
+15:48:15 [2]: Closed FTP and signaled Rank 0.
+15:48:15 [9]: Closed FTP and signaled Rank 0.
+15:48:15 [23]: FTP Error: 
+15:48:15 [34]: FTP Error: 
+15:48:15 [23]: Closed FTP and signaled Rank 0.
+15:48:15 [34]: Closed FTP and signaled Rank 0.
+15:48:15 [12]: FTP Error: 
+15:48:15 [12]: Closed FTP and signaled Rank 0.
+15:48:15 [13]: FTP Error: 
+15:48:15 [13]: Closed FTP and signaled Rank 0.
+15:48:15 [30]: FTP Error: 
+15:48:15 [0]: A-worker retired (2/42)
+15:48:15 [30]: Closed FTP and signaled Rank 0.
+15:48:15 [22]: FTP Error: 
+15:48:15 [22]: Closed FTP and signaled Rank 0.
+15:48:15 [31]: FTP Error: 
+15:48:15 [31]: Closed FTP and signaled Rank 0.
+15:48:15 [0]: A-worker retired (3/42)
+15:48:15 [0]: A-worker retired (4/42)
+15:48:15 [0]: A-worker retired (5/42)
+15:48:15 [0]: A-worker retired (6/42)
+15:48:15 [0]: A-worker retired (7/42)
+15:48:15 [0]: A-worker retired (8/42)
+15:48:15 [0]: A-worker retired (9/42)
+15:48:15 [0]: A-worker retired (10/42)
+15:48:15 [0]: A-worker retired (11/42)
+15:48:15 [4]: FTP Connected.
+15:48:15 [0]: A-worker retired (12/42)
+15:48:15 [0]: A-worker retired (13/42)
+15:48:15 [0]: A-worker retired (14/42)
+15:48:15 [0]: A-worker retired (15/42)
+15:48:15 [0]: A-worker retired (16/42)
+15:48:15 [0]: A-worker retired (17/42)
+15:48:15 [0]: A-worker retired (18/42)
+15:48:15 [42]: FTP Connected.
+15:48:15 [0]: A-worker retired (19/42)
+15:48:15 [10]: FTP Connected.
+15:48:15 [0]: A-worker retired (20/42)
+15:48:15 [0]: A-worker retired (21/42)
+15:48:15 [26]: FTP Connected.
+15:48:15 [0]: A-worker retired (22/42)
+15:48:15 [18]: FTP Connected.
+15:48:15 [42]: Closed FTP and signaled Rank 0.
+15:48:15 [0]: A-worker retired (23/42)
+15:48:16 [15]: FTP Connected.
+15:48:16 [39]: FTP Connected.
+15:48:16 [5]: FTP Connected.
+15:48:16 [19]: FTP Connected.
+15:48:16 [17]: FTP Connected.
+15:48:16 [7]: FTP Connected.
+15:48:16 [16]: FTP Error: 530 Sorry, you may not connect more than 10 times.
+15:48:16 [16]: Closed FTP and signaled Rank 0.
+15:48:16 [0]: A-worker retired (24/42)
+15:48:16 [32]: FTP Error: 530 Sorry, you may not connect more than 10 times.
+15:48:16 [32]: Closed FTP and signaled Rank 0.
+15:48:16 [8]: FTP Error: 530 Sorry, you may not connect more than 10 times.
+15:48:16 [8]: Closed FTP and signaled Rank 0.
+15:48:16 [24]: FTP Error: 530 Sorry, you may not connect more than 10 times.
+15:48:16 [24]: Closed FTP and signaled Rank 0.
+15:48:16 [0]: A-worker retired (25/42)
+15:48:16 [39]: Closed FTP and signaled Rank 0.
+15:48:16 [0]: A-worker retired (26/42)
+15:48:16 [37]: FTP Connected.
+15:48:16 [3]: FTP Error: 530 Sorry, you may not connect more than 10 times.
+15:48:16 [3]: Closed FTP and signaled Rank 0.
+15:48:16 [33]: FTP Error: 530 Sorry, you may not connect more than 10 times.
+15:48:16 [33]: Closed FTP and signaled Rank 0.
+15:48:16 [0]: A-worker retired (27/42)
+15:48:16 [1]: FTP Error: 530 Sorry, you may not connect more than 10 times.
+15:48:16 [1]: Closed FTP and signaled Rank 0.
+15:48:16 [0]: A-worker retired (28/42)
+15:48:16 [0]: A-worker retired (29/42)
+15:48:16 [0]: A-worker retired (30/42)
+15:48:16 [37]: Closed FTP and signaled Rank 0.
+15:48:16 [21]: FTP Connected.
+15:48:16 [0]: A-worker retired (31/42)
+15:48:16 [0]: A-worker retired (32/42)
+15:48:37 [7]: Finished: /gome2b/offline/2026/01/07.
+15:48:37 [7]: Closed FTP and signaled Rank 0.
+15:48:37 [0]: A-worker retired (33/42)
+15:48:38 [5]: Finished: /gome2b/offline/2026/01/05.
+15:48:38 [5]: Closed FTP and signaled Rank 0.
+15:48:38 [0]: A-worker retired (34/42)
+15:48:39 [47]: Processing /gome2b/offline/2026/01/07...
+15:48:39 [46]: Processing /gome2b/offline/2026/01/05...
+15:48:42 [0]: Processed 1/31
+15:48:43 [0]: Processed 2/31
+15:48:46 [4]: Finished: /gome2b/offline/2026/01/04.
+15:48:46 [4]: Closed FTP and signaled Rank 0.
+15:48:46 [0]: A-worker retired (35/42)
+15:48:46 [46]: Processing /gome2b/offline/2026/01/04...
+15:48:49 [26]: Finished: /gome2b/offline/2026/01/26.
+15:48:49 [26]: Closed FTP and signaled Rank 0.
+15:48:49 [0]: A-worker retired (36/42)
+15:48:50 [46]: Processing /gome2b/offline/2026/01/26...
+15:48:50 [0]: Processed 3/31
+15:48:54 [0]: Processed 4/31
+15:48:54 [21]: Finished: /gome2b/offline/2026/01/21.
+15:48:55 [21]: Closed FTP and signaled Rank 0.
+15:48:55 [0]: A-worker retired (37/42)
+15:48:56 [19]: Finished: /gome2b/offline/2026/01/19.
+15:48:56 [19]: Closed FTP and signaled Rank 0.
+15:48:56 [0]: A-worker retired (38/42)
+15:48:57 [47]: Processing /gome2b/offline/2026/01/21...
+15:48:57 [46]: Processing /gome2b/offline/2026/01/19...
+15:48:57 [15]: Finished: /gome2b/offline/2026/01/15.
+15:48:57 [15]: Closed FTP and signaled Rank 0.
+15:48:57 [0]: A-worker retired (39/42)
+15:48:57 [44]: Processing /gome2b/offline/2026/01/15...
+15:48:59 [17]: Finished: /gome2b/offline/2026/01/17.
+15:48:59 [17]: Closed FTP and signaled Rank 0.
+15:48:59 [0]: A-worker retired (40/42)
+15:49:00 [18]: Finished: /gome2b/offline/2026/01/18.
+15:49:00 [18]: Closed FTP and signaled Rank 0.
+15:49:00 [0]: A-worker retired (41/42)
+15:49:00 [45]: Processing /gome2b/offline/2026/01/17...
+15:49:00 [43]: Processing /gome2b/offline/2026/01/18...
+15:49:01 [10]: Finished: /gome2b/offline/2026/01/10.
+15:49:01 [10]: Closed FTP and signaled Rank 0.
+15:49:01 [0]: A-worker retired (42/42)
+15:49:01 [0]: Processed 5/31
+15:49:01 [47]: Processing /gome2b/offline/2026/01/10...
+15:49:01 [0]: Processed 6/31
+15:49:01 [46]: Received STOP signal. Exiting.
+15:49:01 [0]: Processed 7/31
+15:49:01 [44]: Received STOP signal. Exiting.
+15:49:04 [43]: Received STOP signal. Exiting.
+15:49:04 [0]: Processed 8/31
+15:49:05 [0]: Processed 9/31
+15:49:05 [45]: Received STOP signal. Exiting.
+15:49:05 [0]: Processed 10/31
+15:49:05 [0]: All workers finished. Breaking loop.
+15:49:05 [0]: All tasks processed. Sending shutdown signal.
+15:49:05 [47]: Received STOP signal. Exiting.
+15:49:05 [0]: Merging 10 files into master CSV...
+15:49:05 [0]: Cleanup complete. Master file saved.
+<function now at 0x15152f587d90> [0]: Total run duration: 50.13677000999451 s
