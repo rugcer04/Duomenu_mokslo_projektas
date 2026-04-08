@@ -1,0 +1,30 @@
+import requests
+import csv
+
+url = 'https://api.meteo.lt/v1/stations'
+
+try:
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        stations_data = response.json()
+        
+        with open('stotys.csv', mode='w', newline='', encoding='utf-8') as file:
+            writer = csv.writer(file)
+            
+            writer.writerow(['Stotis', 'Platuma', 'Ilguma'])
+
+            for station in stations_data:
+                name = station['code']
+                lat = station['coordinates']['latitude']
+                long = station['coordinates']['longitude']
+                
+                writer.writerow([name, lat, long])
+                
+        print("Duomenys sėkmingai išsaugoti į 'stotys.csv'!")
+            
+    else:
+        print(f"Klaida: Nepavyko gauti duomenų. Statusas: {response.status_code}")
+
+except Exception as e:
+    print(f"Įvyko klaida: {e}")
