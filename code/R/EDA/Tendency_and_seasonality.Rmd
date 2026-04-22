@@ -14,6 +14,7 @@ library(zoo)
 library(stats)
 library(slider)
 library(lubridate)
+library(scales)
 ```
 
 # Duomenys
@@ -301,20 +302,246 @@ season_rolling_sd_plot(data, nh3) /
 season_rolling_sd_plot(data, pm10)
 ```
 
-## Ar MetOp-B rodiklių paklaidos priklauso nuo sezono?
+------------------------------------------------------------------------
+
+## Ar bent vieno MetOp rodiklio paklaida kinta ar yra pastovi?
+
+### BrO
 
 ```{r}
 p_BrO_error <- data %>%
-  ggplot(aes(x = time, y = BrO)) +
-  geom_ribbon(aes(ymin = BrO - BrO_Error, ymax = BrO + BrO_Error), alpha = 0.5) +
-  geom_line(color = "red", linewidth = 0.1) +
-  scale_x_date(date_labels = "%b %d") +
+  ggplot(aes(x = time, y = BrO) ) +
+  geom_ribbon(aes(ymin = BrO - BrO_Error, ymax = BrO + BrO_Error, fill = "Paklaida"), alpha = 0.5) +
+  geom_line(aes(color = "BrO"), linewidth = 0.05, alpha = 0.9) +
+  scale_x_date(date_labels = "%Y", date_breaks = "1 year", expand = expansion(mult = 0, add = 0) ) +
+  scale_y_continuous(
+    labels = label_number(scale = 1e-13, accuracy = 0.1)
+  ) +
+  scale_fill_manual(values = c("Paklaida" = "red")) +
+  scale_color_manual(values = c("BrO" = "gold")) +
   theme_bw() +
-  labs(title = "BrO paklaidos sezoniškumas", y = "BrO Koncentracija", x = "Mėnesis")
-
-p_BrO_error
-ggplotly(p_BrO_error)
+  theme(axis.title.y = element_text(size = 9),
+        legend.position = c(0.98, 0.98),
+        legend.justification = c("right", "top"),
+        legend.background = element_rect(fill = "white", color = "black", linewidth = 0.1),
+        legend.box = "horizontal",
+        legend.direction = "horizontal",
+        legend.margin = margin(2, 2, 2, 2),
+        legend.box.margin = margin(0, 0, 0, 0) ) +
+  labs(title = "BrO vidutinės mėn. paklaidos sezoniškumas",
+       y = expression(BrO ~ Koncentracija ~ (10^{13}) ),
+       x = NULL,
+       subtitle = "Šaltuoju periodu paklaida vidutiniškai mažiausia. Didžiausia Q3 ketvirtyje.",
+       fill = NULL, 
+       color = NULL)
 ```
+
+```{r}
+df_Br_plot <- data %>%
+  mutate(month_group = floor_date(time, unit = "month") ) %>%
+  mutate(BrO_global_mean = mean(BrO, na.rm = TRUE)) %>% 
+  group_by(month_group) %>%
+  mutate(
+    BrO_month_avg = mean(BrO, na.rm = TRUE),
+    BrO_error_month_avg = mean(BrO_Error, na.rm = TRUE),
+    adjustment = BrO_global_mean - BrO_month_avg,
+    BrO_centered = BrO_month_avg + adjustment
+  ) %>%
+  ungroup() %>%
+  select(-month_group, -BrO_global_mean, -adjustment)
+
+seasonal_summary <- data %>%
+  mutate(season = quarter(time) ) %>%
+  group_by(season) %>%
+  summarise(
+    avg_BrO = mean(BrO, na.rm = TRUE),
+    avg_Error = mean(BrO_Error, na.rm = TRUE)
+  ) %>%
+  mutate(Br_CV = avg_Error / avg_BrO)
+
+CV_values <- seasonal_summary$Br_CV %>% round(2)
+
+p_BrO_error_avg <- df_Br_plot %>%
+  ggplot(aes(x = time, y = BrO_centered)) +
+  geom_ribbon(aes(ymin = BrO_centered - BrO_error_month_avg, ymax = BrO_centered + BrO_error_month_avg), alpha = 0.5, fill = 'gold') +
+  geom_line(color = "red", linewidth = 0.1, linetype = 'dashed') +
+  scale_x_date(date_labels = "%Y", date_breaks = "1 year", expand = expansion(mult = 0, add = 0)) +
+  theme_bw() +
+  theme(plot.subtitle = element_text(size = 10, face = "bold"),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank() ) +
+  labs(y = "Centruota paklaida",
+       x = "Metai",
+       subtitle = paste("CV: Q1=", CV_values[1],
+                        ", Q2=", CV_values[2],
+                        ", Q3=", CV_values[3],
+                        ", Q4=", CV_values[4], sep = ""))
+
+rm(df_Br_plot)
+```
+
+```{r}
+p_BrO_error / p_BrO_error_avg +
+  plot_layout(heights = c(3, 2))
+```
+
+### NO2
+
+```{r}
+p_NO2_error <- data %>%
+  ggplot(aes(x = time, y = NO2) ) +
+  geom_ribbon(aes(ymin = NO2 - NO2_Error, ymax = NO2 + NO2_Error, fill = "Paklaida"), alpha = 0.5) +
+  geom_line(aes(color = "NO2"), linewidth = 0.05, alpha = 0.9) +
+  scale_x_date(date_labels = "%Y", date_breaks = "1 year", expand = expansion(mult = 0, add = 0) ) +
+  scale_y_continuous(
+    labels = label_number(scale = 1e-15, accuracy = 0.1)
+  ) +
+  scale_fill_manual(values = c("Paklaida" = "red")) +
+  scale_color_manual(values = c("NO2" = "lightgreen")) +
+  theme_bw() +
+  theme(axis.title.y = element_text(size = 9),
+        legend.position = c(0.98, 0.98),
+        legend.justification = c("right", "top"),
+        legend.background = element_rect(fill = "white", color = "black", linewidth = 0.1),
+        legend.box = "horizontal",
+        legend.direction = "horizontal",
+        legend.margin = margin(2, 2, 2, 2),
+        legend.box.margin = margin(0, 0, 0, 0)
+      ) +
+  labs(title = "NO2 vidutinės mėn. paklaidos sezoniškumas",
+       y = expression(NO2 ~ Koncentracija ~ (10^{15}) ),
+       x = NULL,
+       subtitle = "NO2 paklaida pastovi (CV 11-13 %).",
+       fill = NULL, 
+       color = NULL)
+```
+
+```{r}
+df_NO2_plot <- data %>%
+  mutate(month_group = floor_date(time, unit = "month") ) %>%
+  mutate(NO2_global_mean = mean(NO2, na.rm = TRUE)) %>% 
+  group_by(month_group) %>%
+  mutate(
+    NO2_month_avg = mean(NO2, na.rm = TRUE),
+    NO2_error_month_avg = mean(NO2_Error, na.rm = TRUE),
+    adjustment = NO2_global_mean - NO2_month_avg,
+    NO2_centered = NO2_month_avg + adjustment
+  ) %>%
+  ungroup() %>%
+  select(-month_group, -NO2_global_mean, -adjustment)
+
+seasonal_summary <- data %>%
+  mutate(season = quarter(time) ) %>%
+  group_by(season) %>%
+  summarise(
+    avg_NO2 = mean(NO2, na.rm = TRUE),
+    avg_Error = mean(NO2_Error, na.rm = TRUE)
+  ) %>%
+  mutate(NO2_CV = avg_Error / avg_NO2)
+
+CV_values <- seasonal_summary$NO2_CV %>% round(2)
+
+p_NO2_error_avg <- df_NO2_plot %>%
+  ggplot(aes(x = time, y = NO2_centered)) +
+  geom_ribbon(aes(ymin = NO2_centered - NO2_error_month_avg, ymax = NO2_centered + NO2_error_month_avg), alpha = 0.5, fill = 'lightgreen') +
+  geom_line(color = "red", linewidth = 0.1, linetype = 'dashed') +
+  scale_x_date(date_labels = "%Y", date_breaks = "1 year", expand = expansion(mult = 0, add = 0)) +
+  theme_bw() +
+  theme(plot.subtitle = element_text(size = 10, face = "bold"),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank() ) +
+  labs(y = "Centruota paklaida",
+       x = "Metai",
+       subtitle = paste("CV: Q1=", CV_values[1],
+                        ", Q2=", CV_values[2],
+                        ", Q3=", CV_values[3],
+                        ", Q4=", CV_values[4], sep = ""))
+
+rm(df_NO2_plot)
+```
+
+```{r}
+p_NO2_error / p_NO2_error_avg +
+  plot_layout(heights = c(3, 2))
+```
+
+### O3
+
+```{r}
+p_O3_error <- data %>%
+  ggplot(aes(x = time, y = O3) ) +
+  geom_ribbon(aes(ymin = O3 - O3_Error, ymax = O3 + O3_Error, fill = "Paklaida")) +
+  geom_line(aes(color = "O3"), linewidth = 0.05, alpha = 0.6) +
+  scale_x_date(date_labels = "%Y", date_breaks = "1 year", expand = expansion(mult = 0, add = 0) ) +
+  scale_fill_manual(values = c("Paklaida" = "darkblue")) +
+  scale_color_manual(values = c("O3" = "lightblue")) +
+  theme_bw() +
+  theme(axis.title.y = element_text(size = 9),
+        legend.position = c(0.98, 0.98),
+        legend.justification = c("right", "top"),
+        legend.background = element_rect(fill = "white", color = "black", linewidth = 0.1),
+        legend.box = "horizontal",
+        legend.direction = "horizontal",
+        legend.margin = margin(2, 2, 2, 2),
+        legend.box.margin = margin(0, 0, 0, 0) ) +
+  labs(title = "O3 vidutinės mėn. paklaidos sezoniškumas",
+       y = "O3 koncentracija",
+       x = NULL,
+       subtitle = "O3 paklaida minimali (CV < 1%).",
+       fill = NULL, 
+       color = NULL)
+```
+
+```{r}
+df_O3_plot <- data %>%
+  mutate(month_group = floor_date(time, unit = "month") ) %>%
+  mutate(O3_global_mean = mean(O3, na.rm = TRUE)) %>% 
+  group_by(month_group) %>%
+  mutate(
+    O3_month_avg = mean(O3, na.rm = TRUE),
+    O3_error_month_avg = mean(O3_Error, na.rm = TRUE),
+    adjustment = O3_global_mean - O3_month_avg,
+    O3_centered = O3_month_avg + adjustment
+  ) %>%
+  ungroup() %>%
+  select(-month_group, -O3_global_mean, -adjustment)
+
+seasonal_summary <- data %>%
+  mutate(season = quarter(time) ) %>%
+  group_by(season) %>%
+  summarise(
+    avg_O3 = mean(O3, na.rm = TRUE),
+    avg_Error = mean(O3_Error, na.rm = TRUE)
+  ) %>%
+  mutate(O3_CV = avg_Error / avg_O3)
+
+CV_values <- seasonal_summary$O3_CV %>% round(2)
+
+p_O3_error_avg <- df_O3_plot %>%
+  ggplot(aes(x = time, y = O3_centered)) +
+  geom_ribbon(aes(ymin = O3_centered - O3_error_month_avg, ymax = O3_centered + O3_error_month_avg), alpha = 0.5, fill = 'lightblue') +
+  geom_line(color = "red", linewidth = 0.1, linetype = 'dashed') +
+  scale_x_date(date_labels = "%Y", date_breaks = "1 year", expand = expansion(mult = 0, add = 0)) +
+  theme_bw() +
+  theme(plot.subtitle = element_text(size = 10, face = "bold"),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank() ) +
+  labs(y = "Centruota paklaida",
+       x = "Metai",
+       subtitle = paste("CV: Q1=", CV_values[1],
+                        ", Q2=", CV_values[2],
+                        ", Q3=", CV_values[3],
+                        ", Q4=", CV_values[4], sep = ""))
+
+rm(df_O3_plot)
+```
+
+```{r}
+p_O3_error / p_O3_error_avg +
+  plot_layout(heights = c(3, 2))
+```
+
+------------------------------------------------------------------------
 
 ## Pagal ACF
 
@@ -346,26 +573,46 @@ plot(stl(ts(data$pans, frequency = 365), s.window = "periodic", na.action = na.o
 plot(stl(ts(data$nmvoc, frequency = 365), s.window = "periodic", na.action = na.omit))
 ```
 
-# Trendas
+# Tendencijos
 
-```{r}
-data %>% ggplot(aes(x=time, y=dust)) +
-  geom_line()
+```{r warning=FALSE}
+ts_data <- ts(data$pans, frequency = 365)
 
-data %>% ggplot(aes(x=time, y=pm10)) +
-  geom_line()
-```
+decomp <- stl(ts_data, s.window = "periodic", na.action = na.omit)
 
-```{r}
-ts_data <- ts(data$airTemperature, frequency = 365)
-
-decomp <- stl(ts_data, s.window = "periodic")
-
-data$trend <- as.numeric(decomp$time.series[, "trend"])
+data$trend[1:2772] <- as.numeric(decomp$time.series[, "trend"])
 
 data %>% 
   ggplot(aes(x = time)) +
-  geom_line(aes(y = airTemperature), alpha = 0.3, color = "gray") +
+  geom_line(aes(y = pans), alpha = 0.3, color = "gray") +
+  geom_line(aes(y = trend), color = "red", linewidth = 1) +
+  theme_bw()
+```
+
+```{r warning=FALSE}
+ts_data <- ts(data$nmvoc, frequency = 365)
+
+decomp <- stl(ts_data, s.window = "periodic", na.action = na.omit)
+
+data$trend[1:2772] <- as.numeric(decomp$time.series[, "trend"])
+
+data %>% 
+  ggplot(aes(x = time)) +
+  geom_line(aes(y = nmvoc), alpha = 0.3, color = "gray") +
+  geom_line(aes(y = trend), color = "red", linewidth = 1) +
+  theme_bw()
+```
+
+```{r warning=FALSE}
+ts_data <- ts(data$nh3, frequency = 365)
+
+decomp <- stl(ts_data, s.window = "periodic", na.action = na.omit)
+
+data$trend[1:2772] <- as.numeric(decomp$time.series[, "trend"])
+
+data %>% 
+  ggplot(aes(x = time)) +
+  geom_line(aes(y = nh3), alpha = 0.3, color = "gray") +
   geom_line(aes(y = trend), color = "red", linewidth = 1) +
   theme_bw()
 ```
@@ -375,8 +622,24 @@ data %>%
 ## Krituliai
 
 ```{r}
-p_tp_vs_tp <- data %>% ggplot(aes(x=time, y=tp)) +
-  geom_line(aes(y = lag(tp, 1)), linewidth = 0.75, color = 'gray25') +
+plot_data <- data %>%
+  mutate(tp_lag = lag(tp, 1))
+
+plot_data <- plot_data %>%
+  mutate(
+    diff = xgb_precipitation - tp_lag,
+    direction = ifelse(diff >= 0, "Po", "Virš")
+  )
+
+p_tp_vs_tp1 <- ggplot(plot_data, aes(x = time, y = diff)) +
+  geom_area(aes(fill = direction), alpha = 0.6) +
+  geom_hline(yintercept = 0, color = "black", linewidth = 0.5) +
+  scale_fill_manual(values = c("Virš" = "red", "Po" = "blue")) +
+  theme_bw() +
+  labs(title = "(Tirkos - ECMWF)", y = "Skirtumas", x = "Laikas")
+
+p_tp_vs_tp2 <- ggplot(plot_data, aes(x=time, y=tp_lag)) +
+  geom_line(aes(y = tp_lag), linewidth = 0.75, color = 'gray25') +
   geom_line(data = data, 
             aes(x=time, y=xgb_precipitation), 
             color='red', 
@@ -384,6 +647,5 @@ p_tp_vs_tp <- data %>% ggplot(aes(x=time, y=tp)) +
             linetype = 'dashed') +
   theme_bw()
 
-p_tp_vs_tp
-ggplotly(p_tp_vs_tp)
+p_tp_vs_tp1 + p_tp_vs_tp2
 ```
