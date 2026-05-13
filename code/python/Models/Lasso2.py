@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LassoCV
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import TimeSeriesSplit
 
 def select_features_lasso(df, target_column):
     X = df.drop(columns=[target_column]).copy()
@@ -17,7 +18,8 @@ def select_features_lasso(df, target_column):
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     
-    lasso = LassoCV(cv=5, random_state=2026, max_iter=10000)
+    tscv = TimeSeriesSplit(n_splits=5)
+    lasso = LassoCV(cv=tscv, random_state=2026, max_iter=10000)
     lasso.fit(X_scaled, y)
     
     coef = pd.Series(lasso.coef_, index=feature_names)
