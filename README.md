@@ -1,10 +1,70 @@
 # Duomenų mokslo projektas
 
+<p align="center">
+  <img src="images/3d_radar.png" width="600" title="3D Visualization of Pollution and Precipitation Data">
+</p>
+
 ## Summary
 
-Review of the literature has revealed that the concentration of particulate matter in the atmosphere influences meteorological conditions and, consequently, errors in model predictions. Aerosol particles act as condensation nuclei, contributing to the formation of cloud and ice particles. However, the main weather forecast model for European countries, the ECMWF, does not account for chemical changes in the atmosphere and can only provide a resolution of $9$ km, which is half that of local national models. Therefore, in this study, to improve the accuracy of the global model’s weather forecasts for the city of Vilnius, it combines data from a local automatic weather station and atmospheric pollution data obtained from the Sentinel--5P and MetOp--B and the Copernicus Atmosphere Monitoring Service (CAMS) European Regional Air Quality Reanalysis Ensemble. To achieve this goal, machine learning models are used, such as random forests (RF), extreme gradient boosting (XGB) algorithms, and a more complex method—singular spectrum analysis integrated with a long short-term memory (SSA-LSTM). An ensemble of these models is also tested, which is trained using the forecasts from the mentioned models, with the final forecast provided by the Extreme Gradient Boosting algorithm. The study found that individual machine learning models (evaluated over a $365$-day period): RF $(MAE=1.42,\ RMSE=3.17 \text{ mm})$ and SSA--LSTM $(MAE=1.69,\ RMSE=3.41 \text{ mm})$ did not reduce the forecast errors of ECMWF $(MAE=1.45,\ RMSE=3.15 \text{ mm})$ forecasting without pollution data, with the exception of the XGB algorithm $(MAE=1.41, RMSE=3.07 \text{ mm})$. With the addition of pollution data, the results changed significantly. All models analyzed improved the errors made by the global model: RF $(MAE=1.39,\ RMSE=2.94 \text{ mm})$, SSA--LSTM $(MAE=1.37, RMSE=2.99 \text{ mm})$, while the XGB algorithm $(MAE=1.36, RMSE=2.94 \text{ mm})$ reduced them the most. Although SSA--LSTM underestimates precipitation, it most accurately predicted non-rainy days. The ensemble was evaluated on a smaller set of $108$ days, where the ECMWF errors are: $MAE=1.14\text{ mm}$ and $RMSE=2.45\text{ mm}$. In this sample, individual machine learning algorithms did not improve the performance of the global model, but their ensemble reduced the errors to $MAE=1.09\text{ mm}$ and $RMSE=2.32\text{ mm}$. The study also found that among the most important pollution factors in precipitation forecasting are the concentration of water vapor in the atmospheric column, nitrogen dioxide ($NO_2$) measurements, the concentration of $PM_{10}$ particulate matter at a height of $500$ m, ammonia ($NH_3$), and secondary inorganic aerosols.
+Review of the literature has revealed that the concentration of particulate matter in the atmosphere influences meteorological conditions and, consequently, errors in model predictions. Aerosol particles act as condensation nuclei, contributing to the formation of cloud and ice particles. However, the main weather forecast model for European countries, the ECMWF, does not account for chemical changes in the atmosphere and can only provide a resolution of $9$ km, which is half that of local national models. Therefore, in this study, to improve the accuracy of the global model’s weather forecasts for the city of Vilnius, it combines data from a local automatic weather station and atmospheric pollution data obtained from the Sentinel--5P and MetOp--B and the Copernicus Atmosphere Monitoring Service (CAMS) European Regional Air Quality Reanalysis Ensemble. To achieve this goal, machine learning models are used, such as random forests (RF), extreme gradient boosting (XGB) algorithms, and a more complex method—singular spectrum analysis integrated with a long short-term memory (SSA-LSTM). An ensemble of these models is also tested, which is trained using the forecasts from the mentioned models, with the final forecast provided by the Extreme Gradient Boosting algorithm. 
 
 **Keywords:** Pollution analysis, machine learning, Random Forest, Extreme Gradient Boosting, Singular Spectrum Analysis, Long Short-Term Memory, precipitation forecast, time series
+
+## Key Results
+
+The study empirically demonstrates that incorporating atmospheric pollution data significantly improves precipitation forecast accuracy compared to the global ECMWF baseline.
+
+### Model Performance Comparison (365-Day Dataset)
+
+The table below compares the predictive accuracy of various models before and after integrating atmospheric pollution features.
+
+| Model | Scenario | $R^2$ | MAE (mm) | RMSE (mm) | $r_s$ |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| **ECMWF** | **Baseline** | 0.4846 | 1.4452 | 3.1535 | **0.7647** |
+| Random Forest (RF) | Without Pollution | 0.4792 | 1.4195 | 3.1700 | 0.7212 |
+| | **With Pollution** | 0.5520 | 1.3928 | 2.9401 | 0.7325 |
+| XGBoost (XGB) | Without Pollution | 0.5114 | 1.4178 | 3.0705 | 0.7303 |
+| | **With Pollution** | **0.5523** | **1.3588** | **2.9392** | 0.7228 |
+| SSA-LSTM | Without Pollution | 0.3970 | 1.6922 | 3.4112 | 0.6032 |
+| | **With Pollution** | 0.5368 | 1.3708 | 2.9895 | 0.6640 |
+
+*Performance highlights: The inclusion of pollution data led to a notable increase in $R^2$ and a reduction in both MAE and RMSE across all machine learning models. The XGBoost model with pollution data achieved the highest overall predictive accuracy.*
+
+---
+
+### Ensemble Performance (Small Sample - 108 days)
+| Model | MAE (mm) | RMSE (mm) |
+| :--- | :---: | :---: |
+| ECMWF (Baseline) | 1.14 | 2.45 |
+| **ML Ensemble (Final)** | **1.09** | **2.32** |
+
+## Visual Analysis
+
+<p align="center">
+  <img src="images/3d_radar.png" width="600" title="3D Visualization of Pollution and Precipitation Data">
+  <br>
+  <i>Figure 1: Radar chart comparison of model performance metrics. A larger triangular area signifies superior model performance.</i>
+</p>
+
+The radar chart in **Figure 1** illustrates the comparative performance of the models across multiple metrics. When atmospheric pollution data is included, the Random Forest (RF), XGBoost (XGB), and SSA-LSTM models all demonstrated clear improvements over the global ECMWF baseline. However, despite these gains, the SSA-LSTM model's RMSE remains higher than that of both the RF and XGB models.
+
+The analysis further highlights the critical role of pollution data:
+*   **Without Pollution Data:** Model performance degrades significantly and exhibits higher variance. In this scenario, the XGBoost model still maintains an edge over the ECMWF baseline, while the Random Forest model performs similarly to the global model. 
+*   **Hybrid SSA-LSTM:** The radar plots clearly identify the hybrid SSA-LSTM as the least effective model when atmospheric pollution information is excluded.
+*   **Overall Findings:** While the machine learning approaches successfully reduced MAE and RMSE, $R^2$ values remain relatively low across both the ML algorithms and the ECMWF baseline, suggesting inherent complexities in precipitation forecasting.
+
+<p align="center">
+  <img src="images/plot_cumsum.png" width="500" title="Cumulative Precipitation Comparison">
+  <br>
+  <i>Figure 2: Cumulative precipitation comparison between observations, global baseline (ECMWF), and optimized ML models.</i>
+</p>
+
+The cumulative precipitation curves in **Figure 2** facilitate the identification of systematic prediction biases:
+*   **Global Baseline (ECMWF):** Exhibits a significant positive bias, systematically overestimating precipitation with a Mean Bias Error (MBE) of 0.408 mm.
+*   **Random Forest (RF) & XGBoost (XGB):** These models align closely with the observed precipitation trajectory, significantly reducing bias to 0.153 mm and 0.066 mm, respectively.
+*   **SSA-LSTM:** Conversely, the hybrid SSA-LSTM model exhibits a negative bias, underestimating cumulative precipitation with an MBE of -0.32 mm.
+
+The integration of pollution features notably allows the RF and XGB models to track the actual observed precipitation trends with high precision, overcoming the systematic overestimation inherent in the standard global meteorological model.
 
 ## Used Packages
 
