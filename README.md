@@ -83,15 +83,17 @@ The integration of pollution features notably allows the RF and XGB models to tr
 #### **Code Modules**
 - **`ACSAF/`**: Scripts and notebooks for MetOp-B GOME-2 data retrieval and preprocessing, including MPI-based parallel processing in `MPI/`.
 - **`CAMS/`**: Specialized Python scripts for downloading and preparing atmospheric data from the Copernicus Atmosphere Monitoring Service (CAMS) for various pollutants (NH3, CH4, PM10, PM2.5, etc.).
-- **`datasets_prep/`**: Core data engineering notebooks for merging, cleaning, and imputing air quality, meteorological (ECMWF), and Sentinel-5P datasets.
+- **`datasets_prep/`**: Core data engineering notebooks for merging, cleaning, and imputing air quality, local meteorological (METEO LT), global meteorological (ECMWF), and Sentinel-5P datasets.
 - **`ecmwf/`**: Tools for automated retrieval of yearly and monthly meteorological data using the ECMWF API.
 - **`EUMDAC/`**: Scripts for testing and interacting with EUMETSAT Data Access Client (EUMDAC) for satellite data tailoring and downloads.
+- **`meteo/`**: Tools for interacting with the Lithuanian Hydrometeorological Service (METEO.LT) API and specialized preprocessing for local weather station data.
 - **`Models/`**: Implementation of machine learning models including Random Forest, XGBoost, SSA-LSTM, and Lasso feature selection. Contains notebooks for model training, ensemble creation, and error analysis.
 - **`sentinel/`**: Automated preprocessing and location-specific (Lithuania, Ryga) retrieval scripts for Sentinel-5P data products.
 - **`visuals/`**: Notebooks for generating spatial heatmaps and time-series visualizations for satellite datasets.
 
 #### **Data & Logs**
 - **Satellite Data**: HDF5 structures (`hdf5_structure.txt`), large MetOp-B CSV datasets (`METOPB_full_set.csv`), and Sentinel-5P CSVs for various regions.
+- **Meteorological Data**: Local weather station records from METEO LT (`Vilnius_meteo_data_final_2018_2026.csv`) and global ECMWF reanalysis data.
 - **Processed Datasets**: Final project datasets (`dm_project_dataset.csv`) and prediction outputs (`All_predictions.csv`, `RF_prediction.csv`, `xgboost_pred.csv`).
 - **Models & Logs**: Serialized PyTorch models (`params.pt`, `optimizer.pt`), training history (`history.json`), and detailed HPC/MPI execution logs (`.log`).
 
