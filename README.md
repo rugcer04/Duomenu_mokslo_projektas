@@ -102,7 +102,11 @@ The integration of pollution features notably allows the RF and XGB models to tr
 #### **Code Modules**
 - **`EDA/`**: Comprehensive Exploratory Data Analysis notebooks and RMarkdown files focusing on dependency analysis, outlier detection, and seasonality/tendency studies.
 
+---
 
+## Authors
+
+[@Cristup](https://github.com/Cristup) [@EvelinaDu](https://github.com/EvelinaDu) [@rugcer04](https://github.com/rugcer04)
 
 ---
 
